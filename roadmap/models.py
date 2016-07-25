@@ -20,8 +20,16 @@ TIPOS = (
 
 class Rota(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_rota')
-    nome = models.CharField(max_length=100, db_column='nome_rota')
-    ativa = models.BooleanField(default=True, db_column='ativa_rota')
+    nome = models.CharField(
+        verbose_name=u'nome',
+        max_length=100,
+        db_column='nome_rota'
+    )
+    ativa = models.BooleanField(
+        verbose_name=u'Ativa',
+        default=True,
+        db_column='ativa_rota'
+    )
 
     class Meta:
         db_table = 'tb_rota'
@@ -34,10 +42,19 @@ class Rota(models.Model):
 
 class Visao(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_visao')
-    descricao = models.TextField(max_length=400, db_column='desc_visao')
+    descricao = models.TextField(
+        verbose_name=u'Descrição',
+        max_length=400,
+        db_column='desc_visao'
+    )
     rota = models.ForeignKey(Rota, db_column='tb_rota_id')
-    ativa = models.BooleanField(default=True, db_column='ativa_visao')
+    ativa = models.BooleanField(
+        verbose_name=u'Ativa',
+        default=True,
+        db_column='ativa_visao'
+    )
     tipo = models.CharField(
+        verbose_name=u'Tipo',
         max_length=100,
         choices=TIPOS,
         db_column='tipo_visao'
@@ -54,8 +71,16 @@ class Visao(models.Model):
 
 class Fator(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_fator')
-    nome = models.CharField(max_length=100, db_column='nome_fator')
-    ativo = models.BooleanField(default=True, db_column='ativa_fator')
+    nome = models.CharField(
+        verbose_name=u'Nome',
+        max_length=100,
+        db_column='nome_fator'
+    )
+    ativo = models.BooleanField(
+        verbose_name=u'Ativo',
+        default=True,
+        db_column='ativa_fator'
+    )
     visao = models.ForeignKey(Visao, db_column='tb_visao_id')
 
     class Meta:
@@ -69,8 +94,16 @@ class Fator(models.Model):
 
 class Responsavel(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_resp')
-    nome = models.CharField(max_length=100, db_column='nome_resp')
-    ativo = models.BooleanField(default=True, db_column='tb_responsavel')
+    nome = models.CharField(
+        verbose_name=u'Nome',
+        max_length=100,
+        db_column='nome_resp'
+    )
+    ativo = models.BooleanField(
+        verbose_name=u'Ativo',
+        default=True,
+        db_column='tb_responsavel'
+    )
 
     class Meta:
         db_table = 'tb_responsavel'
@@ -83,10 +116,25 @@ class Responsavel(models.Model):
 
 class Tema(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_tema')
-    descricao = models.TextField(max_length=400, db_column='descricao_tema')
-    assunto = models.TextField(max_length=400, db_column='assunto_tema')
-    ativo = models.BooleanField(default=True, db_column='ativa_tema')
-    prioridade = models.IntegerField(db_column='prioridade_tema')
+    descricao = models.TextField(
+        verbose_name=u'Descrição',
+        max_length=400,
+        db_column='descricao_tema'
+    )
+    assunto = models.TextField(
+        verbose_name=u'Assunto',
+        max_length=400,
+        db_column='assunto_tema'
+    )
+    ativo = models.BooleanField(
+        verbose_name=u'Ativo',
+        default=True,
+        db_column='ativa_tema'
+    )
+    prioridade = models.IntegerField(
+        verbose_name=u'Prioridade',
+        db_column='prioridade_tema'
+    )
 
     class Meta:
         db_table = 'tb_tema'
@@ -99,30 +147,55 @@ class Tema(models.Model):
 
 class Acao(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_acao')
-    descricao = models.TextField(max_length=400, db_column='desc_acao')
+    descricao = models.TextField(
+        verbose_name=u'Descrição',
+        max_length=400,
+        db_column='desc_acao'
+    )
     motivo = models.CharField(
+        verbose_name=u'Motivo',
         max_length=255,
         blank=True,
         null=True,
         db_column='motivo_acao'
     )
-    valor = models.FloatField(blank=True, null=True, db_column='valor_acao')
-    data_inicio = models.DateField(db_column='data_inicio_acao')
-    data_fim = models.DateField(db_column='data_fim_acao')
+    valor = models.FloatField(
+        verbose_name=u'Valor',
+        blank=True,
+        null=True,
+        db_column='valor_acao'
+    )
+    data_inicio = models.DateField(
+        verbose_name=u'Data de início',
+        db_column='data_inicio_acao'
+    )
+    data_fim = models.DateField(
+        verbose_name=u'Data final',
+        db_column='data_fim_acao'
+    )
     local = models.CharField(
+        verbose_name=u'Local',
         blank=True,
         null=True,
         max_length=100,
         db_column='local_acao'
     )
-    ativa = models.BooleanField(default=True, db_column='ativa_acao')
+    ativa = models.BooleanField(
+        verbose_name=u'Ativa',
+        default=True,
+        db_column='ativa_acao'
+    )
     tipo = models.CharField(
+        verbose_name=u'Tipo',
         max_length=100,
         choices=TIPOS,
         db_column='tipo_acao'
     )
     responsavel = models.ForeignKey(Responsavel, db_column='tb_responsavel_id')
-    numero = models.IntegerField(db_column='numero_acao')
+    numero = models.IntegerField(
+        verbose_name=u'Número',
+        db_column='numero_acao'
+    )
     fator = models.ForeignKey(Fator, db_column='tb_fator_critico_sucesso_id')
     temas = models.ManyToManyField(
         Tema,
@@ -142,15 +215,33 @@ class Acao(models.Model):
 class Tarefa(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_tarefa')
     status = models.CharField(
+        verbose_name=u'Status',
         max_length=45,
         choices=STATUS_TAREFA,
         db_column='status_tarefa'
     )
-    data_inicio = models.DateField(db_column='data_inicio_tarefa')
-    data_fim = models.DateField(db_column='data_fim_tarefa')
-    ativa = models.BooleanField(default=True, db_column='ativa_tarefa')
-    porcentagem = models.FloatField(db_column='porc_concluida_tarefa')
-    descricao = models.TextField(max_length=400, db_column='desc_tarefa')
+    data_inicio = models.DateField(
+        verbose_name=u'Data de início',
+        db_column='data_inicio_tarefa'
+    )
+    data_fim = models.DateField(
+        verbose_name=u'Data final',
+        db_column='data_fim_tarefa'
+    )
+    ativa = models.BooleanField(
+        verbose_name=u'Ativa',
+        default=True,
+        db_column='ativa_tarefa'
+    )
+    porcentagem = models.FloatField(
+        verbose_name=u'Porcentagem',
+        db_column='porc_concluida_tarefa'
+    )
+    descricao = models.TextField(
+        verbose_name=u'Descrição',
+        max_length=400,
+        db_column='desc_tarefa'
+    )
     acao = models.ForeignKey(Acao, db_column='tb_acao_id')
     responsaveis = models.ManyToManyField(
         Usuario,
