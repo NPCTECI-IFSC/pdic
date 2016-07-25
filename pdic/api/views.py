@@ -1,0 +1,45 @@
+# encoding: utf-8
+from __future__ import unicode_literals
+
+from pdic.api.serializers import *
+from rest_framework.viewsets import ModelViewSet
+
+
+class UsuarioViewSet(ModelViewSet):
+    queryset = Usuario.objects.filter(ativo=True)
+    serializer_class = UsuarioSerializer
+
+
+class RotaViewSet(ModelViewSet):
+    queryset = Rota.objects.filter(ativa=True)
+    serializer_class = RotaSerializer
+
+
+class VisaoViewSet(ModelViewSet):
+    queryset = Visao.objects.filter(ativa=True)
+    serializer_class = VisaoSerializer
+
+
+class FatorViewSet(ModelViewSet):
+    queryset = Fator.objects.filter(ativo=True)
+    serializer_class = FatorSerializer
+
+
+class AcaoViewSet(ModelViewSet):
+    queryset = Acao.objects.filter(ativa=True)
+    serializer_class = AcaoSerializer
+
+
+class ResponsavelViewSet(ModelViewSet):
+    queryset = Responsavel.objects.filter(ativo=True)
+    serializer_class = ResponsavelSerializer
+
+
+class TemaViewSet(ModelViewSet):
+    queryset = Tema.objects.filter(ativo=True)
+    serializer_class = TemaSerializer
+
+
+class TarefaViewSet(ModelViewSet):
+    queryset = Tarefa.objects.filter(ativa=True)
+    serializer_class = TarefaSerializer

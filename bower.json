@@ -1,0 +1,15 @@
+{
+  "name": "pdic",
+  "authors": [
+    "GabrielEcker <gabriel.ecker@gmail.com>",
+    "TalitaRossari <rossaritalita@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
