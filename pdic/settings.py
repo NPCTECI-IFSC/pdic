@@ -43,6 +43,7 @@ PROJECT_APPS = [
     'roadmap',
     'accounts',
     'rest_framework',
+    'django_filters',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS

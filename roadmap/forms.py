@@ -6,10 +6,8 @@ from roadmap.models import *
 class TarefaForm(forms.ModelForm):
 
     visao = forms.ModelChoiceField(
-        queryset=Visao.objects.filter(ativa=True)
-    )
-    fator = forms.ModelChoiceField(
-        queryset=Fator.objects.filter(ativo=True)
+        queryset=Visao.objects.filter(ativa=True),
+        label=u'Visão'
     )
 
     class Meta:
@@ -20,9 +18,14 @@ class TarefaForm(forms.ModelForm):
             'data_fim',
             'porcentagem',
             'descricao',
-            'visao',
-            'fator',
-            'acao',
             'responsaveis',
-            'ativa'
+            'ativa',
+            'visao'
         )
+
+    def __init__(self, *args, **kwargs):
+        super(TarefaForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'form-control'
+            })

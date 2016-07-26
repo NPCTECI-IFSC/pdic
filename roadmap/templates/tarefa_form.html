@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p>
+            <label>Fator:</label>
+            <select id="fatores" class="form-control combo" disabled>
+            </select>
+        </p>
+        <p>
+            <label>Ação:</label>
+            <select id="acoes" class="form-control combo" disabled>
+            </select>
+        </p>
+        <p><button type="submit">Salvar</button></p>
+    </form>
+    <script>
+        var getOptions = function(element, value, key, APIUrl){
+            if(value){
+                $.ajax({
+                    method: "GET",
+                    url: "/api/" + APIUrl + value,
+                    success: function(data){
+                        var options = "<option value=''>Selecione</option>";
+                        element.removeAttr('disabled');
+                        data.forEach(function(item){
+                            options += "<option value='" + item.id + "'>" + item[key] + "</option>";
+                        });
+                        element.html(options);
+                    }
+                });
+            } else {
+                $('.combo').html('').attr('disabled', '');
+            }
+        }
+
+        $('#id_visao').change(function(){
+            var url = "fatores/?visao=";
+            getOptions($('#fatores'), $('#id_visao').val(), 'nome', url);
+            $('#acoes').html('').attr('disabled', '');
+        });
+
+        $('#fatores').change(function(){
+            var url = "acoes/?fator=";
+            getOptions($('#acoes'), $('#fatores').val(), 'descricao', url);
+        });
+    </script>
+{% endblock %}

@@ -47,7 +47,11 @@ class Visao(models.Model):
         max_length=400,
         db_column='desc_visao'
     )
-    rota = models.ForeignKey(Rota, db_column='tb_rota_id')
+    rota = models.ForeignKey(
+        Rota,
+        verbose_name=u'Rota',
+        db_column='tb_rota_id'
+    )
     ativa = models.BooleanField(
         verbose_name=u'Ativa',
         default=True,
@@ -81,7 +85,11 @@ class Fator(models.Model):
         default=True,
         db_column='ativa_fator'
     )
-    visao = models.ForeignKey(Visao, db_column='tb_visao_id')
+    visao = models.ForeignKey(
+        Visao,
+        verbose_name=u'Visão',
+        db_column='tb_visao_id'
+    )
 
     class Meta:
         db_table = 'tb_fator_critico_sucesso'
@@ -191,14 +199,23 @@ class Acao(models.Model):
         choices=TIPOS,
         db_column='tipo_acao'
     )
-    responsavel = models.ForeignKey(Responsavel, db_column='tb_responsavel_id')
+    responsavel = models.ForeignKey(
+        Responsavel,
+        verbose_name=u'Responsável',
+        db_column='tb_responsavel_id'
+    )
     numero = models.IntegerField(
         verbose_name=u'Número',
         db_column='numero_acao'
     )
-    fator = models.ForeignKey(Fator, db_column='tb_fator_critico_sucesso_id')
+    fator = models.ForeignKey(
+        Fator,
+        verbose_name=u'Fator',
+        db_column='tb_fator_critico_sucesso_id'
+    )
     temas = models.ManyToManyField(
         Tema,
+        verbose_name=u'Temas',
         related_name='acoes',
         db_table='tb_acao_has_tb_tema'
     )
@@ -242,9 +259,14 @@ class Tarefa(models.Model):
         max_length=400,
         db_column='desc_tarefa'
     )
-    acao = models.ForeignKey(Acao, db_column='tb_acao_id')
+    acao = models.ForeignKey(
+        Acao,
+        verbose_name=u'Ação',
+        db_column='tb_acao_id'
+    )
     responsaveis = models.ManyToManyField(
         Usuario,
+        verbose_name=u'Responsáveis',
         related_name='tarefas',
         db_table='tb_tarefa_has_tb_responsavel'
     )

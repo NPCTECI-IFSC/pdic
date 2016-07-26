@@ -1,7 +1,9 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
+from pdic.api.filters import *
 from pdic.api.serializers import *
+from rest_framework.filters import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 
 
@@ -23,11 +25,15 @@ class VisaoViewSet(ModelViewSet):
 class FatorViewSet(ModelViewSet):
     queryset = Fator.objects.filter(ativo=True)
     serializer_class = FatorSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = FatorFilter
 
 
 class AcaoViewSet(ModelViewSet):
     queryset = Acao.objects.filter(ativa=True)
     serializer_class = AcaoSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = AcaoFilter
 
 
 class ResponsavelViewSet(ModelViewSet):
