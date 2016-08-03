@@ -145,3 +145,5 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/pt-br/1.9/topics/auth/customizing/
 
 AUTH_USER_MODEL = 'accounts.Usuario'
+
+DATE_INPUT_FORMATS = ('%d-%m-%Y')

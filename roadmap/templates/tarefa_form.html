@@ -5,15 +5,15 @@
         {{ form.as_p }}
         <p>
             <label>Fator:</label>
-            <select id="fatores" class="form-control combo" disabled>
+            <select id="fatores" class="form-control combo" name="fator" disabled>
             </select>
         </p>
         <p>
             <label>Ação:</label>
-            <select id="acoes" class="form-control combo" disabled>
+            <select id="acoes" class="form-control combo" name="acao" disabled>
             </select>
         </p>
-        <p><button type="submit">Salvar</button></p>
+        <p><button type="submit" class="btn btn-primary">Salvar</button></p>
     </form>
     <script>
         var getOptions = function(element, value, key, APIUrl){

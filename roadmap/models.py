@@ -276,5 +276,5 @@ class Tarefa(models.Model):
         verbose_name = u'Tarefa'
         verbose_name_plural = u'Tarefas'
 
-    def __str__(self):
+    def __unicode__(self):
         return '{} - {}%'.format(self.get_status_display(), self.porcentagem)
