@@ -103,3 +103,43 @@ class AcaoForm(generic.FormView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
+
+
+class TarefaList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Tarefa
+
+
+class RotaList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Rota
+
+
+class VisaoList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Visao
+
+
+class FatorList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Fator
+
+
+class ResponsavelList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Responsavel
+
+
+class UsuarioList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Usuario
+
+
+class TemaList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Tema
+
+
+class AcaoList(generic.ListView):
+    template_name = 'generic_list.html'
+    model = Acao

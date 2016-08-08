@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^$', Index.as_view(), name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
-    url(r'^pdic/', include('roadmap.urls', namespace='roadmap'))
+    url(r'^pdic/', include('roadmap.urls', namespace='pdic'))
 ]
