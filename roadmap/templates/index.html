@@ -2,6 +2,28 @@
 {% load staticfiles %}
 {% block content %}
     <div class="row">
-        <h1 id="helloworld">Mostrar várias coisas bonitas...</h1>
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                PDIC - Rotas Estratégicas Setoriais
+            </h1>
+            <div id="button-create"></div>
+        </div>
+    </div>
+    <div class="row" id="content">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <img src="{% static 'img/banner_rotas.png' %}" style="width:100%"/>
+                    <div>
+                        <p>
+                            Com o Projeto Rotas Estratégicas Setoriais, o Sistema FIESC tem o objetivo de sinalizar caminhos de construção do futuro para cada um dos setores e áreas identificados no Projeto Setores Portadores de Futuro para o Estado de Santa Catarina. Os setores selecionados são considerados como os mais promissores para a indústria do estado no horizonte de dez anos, até 2022. A partir dessa identificação, evidencia-se a necessidade de concepção de mapas de trajetórias a serem percorridas para ampliar a competitividade de cada um dos setores.
+                        </p>
+                    </div>
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

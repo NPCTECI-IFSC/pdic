@@ -1,0 +1,24 @@
+.fa-check {
+    color: green;
+}
+
+.fa-times {
+    color:red;
+}
+
+.option-btn {
+    padding: 4px 8px;
+}
+
+.pagination {
+    display: block;
+    text-align: center;
+}
+
+.btn-create {
+    margin-bottom: 20px;
+}
+
+.table > thead > tr > th, tbody {
+    text-align: center;
+}

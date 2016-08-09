@@ -1,12 +1,7 @@
 # encoding: utf-8
 from django import forms
 from roadmap.models import *
-
-def fix_fields(fields):
-    for field in fields.values():
-        field.widget.attrs.update({
-            'class': 'form-control'
-        })
+from util import fix_fields
 
 
 class TarefaForm(forms.ModelForm):
@@ -44,6 +39,11 @@ class TarefaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TarefaForm, self).__init__(*args, **kwargs)
         fix_fields(self.fields)
+
+    def save(self, commit=True):
+        acao = Acao.objects.get(id=self.data.get('acao'))
+        self.instance.acao = acao
+        return super(TarefaForm, self).save()
 
 
 class RotaForm(forms.ModelForm):

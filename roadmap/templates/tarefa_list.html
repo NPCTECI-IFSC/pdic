@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Lista de tarefas</h1>
+    <a href="{% url 'pdic:create-tarefa' %}" class="btn btn-default btn-create">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Adicionar
+    </a>
+    {% if tarefas %}
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Data de início</th>
+                    <th>Data final</th>
+                    <th>Porcentagem</th>
+                    <th>Descrição</th>
+                    <th>Ação</th>
+                    <th>Responsáveis</th>
+                    <th>Ativa</th>
+                    <th>Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarefa in tarefas %}
+                    <tr>
+                        <td>{{ tarefa.get_status_display }}</td>
+                        <td>{{ tarefa.data_inicio }}</td>
+                        <td>{{ tarefa.data_fim }}</td>
+                        <td>{{ tarefa.porcentagem }}%</td>
+                        <td>{{ tarefa.descricao }}</td>
+                        <td>{{ tarefa.acao }}</td>
+                        <td>
+                            {% for responsavel in tarefa.responsaveis.all %}
+                                {{ responsavel.nome }},
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if tarefa.ativa %}
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary option-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <a class="btn btn-danger option-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Não há tarefas cadastradas.</p>
+    {% endif %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'pdic:list-tarefas' %}?page={{ page_obj.previous_page_number }}">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+                <span class="page-current">
+                    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'pdic:list-tarefas' %}?page={{ page_obj.next_page_number }}">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}
