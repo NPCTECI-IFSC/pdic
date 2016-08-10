@@ -11,7 +11,14 @@
         </p>
         <p>
             <label>Ação:</label>
-            <select id="acoes" class="form-control combo" name="acao" disabled>
+            <select id="acoes" class="form-control combo" name="acao"
+                {% if not object.acao %}
+                    disabled
+                {% endif %}
+            >
+            {% if object.acao %}
+                <option value="{{ object.acao.id }}">{{ object.acao }}</option>
+            {% endif %}
             </select>
         </p>
         <p><button type="submit" class="btn btn-primary">Salvar</button></p>
@@ -35,13 +42,11 @@
                 $('.combo').html('').attr('disabled', '');
             }
         }
-
         $('#id_visao').change(function(){
             var url = "fatores/?visao=";
             getOptions($('#fatores'), $('#id_visao').val(), 'nome', url);
             $('#acoes').html('').attr('disabled', '');
         });
-
         $('#fatores').change(function(){
             var url = "acoes/?fator=";
             getOptions($('#acoes'), $('#fatores').val(), 'descricao', url);

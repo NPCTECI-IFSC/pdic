@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Lista de fatores críticos de sucesso</h1>
+    <h1>Lista de fatores</h1>
     <a href="{% url 'pdic:create-fator' %}" class="btn btn-default btn-create">
         <i class="fa fa-plus" aria-hidden="true"></i>
         Adicionar
@@ -28,8 +28,12 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a class="btn btn-primary option-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                            <a class="btn btn-danger option-btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="{% url 'pdic:edit-fator' fator.id %}" class="btn btn-primary option-btn">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-danger option-btn">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

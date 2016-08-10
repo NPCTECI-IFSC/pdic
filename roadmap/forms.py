@@ -8,7 +8,8 @@ class TarefaForm(forms.ModelForm):
 
     visao = forms.ModelChoiceField(
         queryset=Visao.objects.filter(ativa=True),
-        label=u'Visão'
+        label=u'Visão',
+        required=False
     )
 
     class Meta:
@@ -23,18 +24,6 @@ class TarefaForm(forms.ModelForm):
             'ativa',
             'visao'
         )
-        widgets = {
-            'data_inicio': forms.DateInput(
-                attrs={
-                    'type': 'date'
-                }
-            ),
-            'data_fim': forms.DateInput(
-                attrs={
-                    'type': 'date'
-                }
-            )
-        }
 
     def __init__(self, *args, **kwargs):
         super(TarefaForm, self).__init__(*args, **kwargs)
@@ -119,18 +108,6 @@ class AcaoForm(forms.ModelForm):
             'fator',
             'temas'
         )
-        widgets = {
-            'data_inicio': forms.DateInput(
-                attrs={
-                    'type': 'date'
-                }
-            ),
-            'data_fim': forms.DateInput(
-                attrs={
-                    'type': 'date'
-                }
-            )
-        }
 
     def __init__(self, *args, **kwargs):
         super(AcaoForm, self).__init__(*args, **kwargs)

@@ -132,6 +132,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATE_INPUT_FORMATS = ('%d-%m-%Y',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -146,4 +147,3 @@ STATICFILES_DIRS = (
 
 AUTH_USER_MODEL = 'accounts.Usuario'
 
-DATE_INPUT_FORMATS = ('%d-%m-%Y')
