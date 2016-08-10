@@ -37,66 +37,73 @@
                     <a class="navbar-brand" href="{% url 'index' %}">PDIC - Rotas Estratégicas Setoriais</a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                            </li>
-                        </ul>
-                    </li>
+                    {% if not request.user.is_authenticated %}
+                        <li><a href="{% url 'accounts:register' %}">Registre-se</a></li>
+                        <li><a href="{% url 'accounts:login' %}">Logue-se</a></li>
+                    {% else %}
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="{% url 'accounts:logout' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
-                <div class="navbar-default sidebar" role="navigation">
-                    <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu">
-                            <li>
-                                <a href="{% url 'pdic:list-rotas' %}"><i class="fa fa-fw fa-dashboard"></i> Rotas</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'pdic:list-temas' %}"><i class="fa fa-fw fa-bar-chart-o"></i> Temas</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'pdic:list-tarefas' %}"><i class="fa fa-fw fa-table"></i> Tarefas</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'pdic:list-visoes' %}"><i class="fa fa-fw fa-edit"></i> Visões</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'pdic:list-fatores' %}"><i class="fa fa-fw fa-wrench"></i> Fatores</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'pdic:list-responsaveis' %}"><i class="fa fa-fw fa-file"></i> Responsáveis</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'pdic:list-acoes' %}"><i class="fa fa-fw fa-file"></i> Ações</a>
-                            </li>
-                            <li>
-                                <a id="charts" href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-bar-chart-o"></i> Gráficos <i class="fa fa-fw fa-caret-down"></i></a>
-                                <ul id="demo" class="collapse nav nav-second-level">
-                                    <li>
-                                        <a href="#">Conhecimento Chave por Tendência</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ações e porcentagem de conclusão</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Tarefa e porcentagem de conclusão</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Tendências por rota</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+                {% if request.user.is_authenticated %}
+                    <div class="navbar-default sidebar" role="navigation">
+                        <div class="sidebar-nav navbar-collapse">
+                            <ul class="nav" id="side-menu">
+                                <li>
+                                    <a href="{% url 'pdic:list-rotas' %}"><i class="fa fa-fw fa-dashboard"></i> Rotas</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'pdic:list-temas' %}"><i class="fa fa-fw fa-bar-chart-o"></i> Temas</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'pdic:list-tarefas' %}"><i class="fa fa-fw fa-table"></i> Tarefas</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'pdic:list-visoes' %}"><i class="fa fa-fw fa-edit"></i> Visões</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'pdic:list-fatores' %}"><i class="fa fa-fw fa-wrench"></i> Fatores</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'pdic:list-responsaveis' %}"><i class="fa fa-fw fa-file"></i> Responsáveis</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'pdic:list-acoes' %}"><i class="fa fa-fw fa-file"></i> Ações</a>
+                                </li>
+                                <li>
+                                    <a id="charts" href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-bar-chart-o"></i> Gráficos <i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul id="demo" class="collapse nav nav-second-level">
+                                        <li>
+                                            <a href="#">Conhecimento Chave por Tendência</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Ações e porcentagem de conclusão</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Tarefa e porcentagem de conclusão</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Tendências por rota</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </nav>
+            </div>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     {% block content %}

@@ -102,6 +102,15 @@ class RotaEdit(generic.edit.UpdateView):
         return context
 
 
+class RotaDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Rota
+    success_url = 'pdic:list-rotas'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+
 class VisaoList(generic.ListView):
     template_name = 'visao_list.html'
     context_object_name = 'visoes'
@@ -141,6 +150,15 @@ class VisaoEdit(generic.edit.UpdateView):
         context = super(VisaoEdit, self).get_context_data(*args, **kwargs)
         context['nome_form'] = u'Edição de visão'
         return context
+
+
+class VisaoDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Visao
+    success_url = 'pdic:list-visoes'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
 
 
 class FatorList(generic.ListView):
@@ -184,6 +202,15 @@ class FatorEdit(generic.edit.UpdateView):
         return context
 
 
+class FatorDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Fator
+    success_url = 'pdic:list-fatores'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+
 class ResponsavelList(generic.ListView):
     template_name = 'responsavel_list.html'
     context_object_name = 'responsaveis'
@@ -223,6 +250,15 @@ class ResponsavelEdit(generic.UpdateView):
         context = super(ResponsavelEdit, self).get_context_data(*args, **kwargs)
         context['nome_form'] = u'Edição de responsável'
         return context
+
+
+class ResponsavelDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Responsavel
+    success_url = 'pdic:list-responsaveis'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
 
 
 class TemaList(generic.ListView):
@@ -266,6 +302,15 @@ class TemaEdit(generic.edit.UpdateView):
         return context
 
 
+class TemaDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Tema
+    success_url = 'pdic:list-temas'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+
 class AcaoList(generic.ListView):
     template_name = 'acao_list.html'
     context_object_name = 'acoes'
@@ -305,3 +350,12 @@ class AcaoEdit(generic.edit.UpdateView):
         context = super(AcaoEdit, self).get_context_data(*args, **kwargs)
         context['nome_form'] = u'Edição de ação'
         return context
+
+
+class AcaoDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Acao
+    success_url = 'pdic:list-acoes'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
