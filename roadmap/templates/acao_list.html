@@ -20,7 +20,9 @@
                     <th>Número</th>
                     <th>Fator</th>
                     <th>Temas</th>
+                    {% if request.user.is_authenticated %}
                     <th>Opções</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +43,7 @@
                                 {{ tema }},
                             {% endfor %}
                         </td>
+                        {% if request.user.is_authenticated %}
                         <td>
                             <a href="{% url 'pdic:edit-acao' acao.id %}" class="btn btn-primary option-btn">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -49,6 +52,7 @@
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>

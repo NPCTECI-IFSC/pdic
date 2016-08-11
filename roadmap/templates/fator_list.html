@@ -12,7 +12,9 @@
                     <th>Nome</th>
                     <th>Visão</th>
                     <th>Ativo</th>
+                    {% if request.user.is_authenticated %}
                     <th>Opções</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +29,7 @@
                                 <i class="fa fa-times" aria-hidden="true"></i>
                             {% endif %}
                         </td>
+                        {% if request.user.is_authenticated %}
                         <td>
                             <a href="{% url 'pdic:edit-fator' fator.id %}" class="btn btn-primary option-btn">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -35,6 +38,7 @@
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>

@@ -1,6 +1,6 @@
 # encoding: utf-8
 from accounts.forms import *
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views import generic
@@ -30,12 +30,13 @@ class LoginView(generic.FormView):
 
     def form_valid(self, form):
         if form.is_valid():
-            username = self.request.POST.get('email')
-            password = self.request.POST.get('password')
-            user = authenticate(username=username, password=password)
-            if user:
-                login(self.request, user)
+            user = authenticate(
+                username=self.request.POST.get('email'),
+                password=self.request.POST.get('password')
+            )
+            login(self.request, user)
         return super(LoginView, self).form_valid(form)
+
 
 def logout_view(request):
     logout(request)
