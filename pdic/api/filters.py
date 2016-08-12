@@ -5,6 +5,15 @@ import django_filters
 from roadmap.models import *
 
 
+class TarefaFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = Tarefa
+        fields = {
+            'acao': ['exact']
+        }
+
+
 class FatorFilter(django_filters.FilterSet):
 
     class Meta:

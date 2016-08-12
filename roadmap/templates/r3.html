@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load l10n %}
+{% block content %}
+<h1>Ações e porcentagem de conclusão</h1>
+<div class="list-group">
+    {% for acao in acoes %}
+        <a href="{% url 'pdic:r4' acao.id %}" class="list-group-item">
+            Descrição: {{ acao.descricao }}
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ acao.porcentagem|unlocalize }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ acao.porcentagem|unlocalize }}%">
+                    {{ acao.porcentagem|unlocalize }}%
+                </div>
+            </div>
+            Prazo: {{ acao.data_inicio }} até {{ acao.data_fim }}.
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}

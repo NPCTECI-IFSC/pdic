@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from .forms import *
 from .models import *
+from django.db.models import Sum, Count, ExpressionWrapper, FloatField
 from django.core.urlresolvers import reverse
 from django.views import generic
 
@@ -16,6 +17,12 @@ class TarefaList(generic.ListView):
     context_object_name = 'tarefas'
     model = Tarefa
     paginate_by = 15
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated() and self.request.user.is_admin:
+            return Tarefa.objects.all()
+        else:
+            return Tarefa.objects.filter(ativa=True)
 
 
 class TarefaCreate(generic.FormView):
@@ -67,6 +74,12 @@ class RotaList(generic.ListView):
     model = Rota
     paginate_by = 15
 
+    def get_queryset(self):
+        if self.request.user.is_authenticated() and self.request.user.is_admin:
+            return Rota.objects.all()
+        else:
+            return Rota.objects.filter(ativa=True)
+
 
 class RotaCreate(generic.FormView):
     template_name = 'generic_form.html'
@@ -116,6 +129,12 @@ class VisaoList(generic.ListView):
     context_object_name = 'visoes'
     model = Visao
     paginate_by = 15
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated() and self.request.user.is_admin:
+            return Visao.objects.all()
+        else:
+            return Visao.objects.filter(ativa=True)
 
 
 class VisaoCreate(generic.FormView):
@@ -167,6 +186,12 @@ class FatorList(generic.ListView):
     model = Fator
     paginate_by = 15
 
+    def get_queryset(self):
+        if self.request.user.is_authenticated() and self.request.user.is_admin:
+            return Fator.objects.all()
+        else:
+            return Fator.objects.filter(ativo=True)
+
 
 class FatorCreate(generic.FormView):
     template_name = 'generic_form.html'
@@ -216,6 +241,12 @@ class ResponsavelList(generic.ListView):
     context_object_name = 'responsaveis'
     model = Responsavel
     paginate_by = 15
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated() and self.request.user.is_admin:
+            return Responsavel.objects.all()
+        else:
+            return Responsavel.objects.filter(ativo=True)
 
 
 class ResponsavelCreate(generic.FormView):
@@ -267,6 +298,12 @@ class TemaList(generic.ListView):
     model = Tema
     paginate_by = 15
 
+    def get_queryset(self):
+        if self.request.user.is_authenticated() and self.request.user.is_admin:
+            return Tema.objects.all()
+        else:
+            return Tema.objects.filter(ativo=True)
+
 
 class TemaCreate(generic.FormView):
     template_name = 'generic_form.html'
@@ -317,6 +354,12 @@ class AcaoList(generic.ListView):
     model = Acao
     paginate_by = 10
 
+    def get_queryset(self):
+        if self.request.user.is_authenticated() and self.request.user.is_admin:
+            return Acao.objects.all()
+        else:
+            return Acao.objects.filter(ativa=True)
+
 
 class AcaoCreate(generic.FormView):
     template_name = 'generic_form.html'
@@ -359,3 +402,24 @@ class AcaoDelete(generic.edit.DeleteView):
 
     def get_success_url(self):
         return reverse(self.success_url)
+
+
+class Relatorio3(generic.ListView):
+    template_name = 'r3.html'
+    model = Acao
+    context_object_name = 'acoes'
+
+    def get_queryset(self):
+        qs = super(Relatorio3, self).get_queryset()
+        return qs.filter(ativa=True, tarefas__isnull=False).annotate(
+            porcentagem=ExpressionWrapper(
+                Sum('tarefas__porcentagem') / Count('tarefas'),
+                output_field=FloatField()
+            )
+        )
+
+
+class Relatorio4(generic.DetailView):
+    template_name = 'r4.html'
+    model = Acao
+    context_object_name = 'acao'

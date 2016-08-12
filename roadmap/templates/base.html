@@ -24,7 +24,6 @@
         <script src="{% static 'bower/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js' %}"></script>
     </head>
     <body>
-        <div id="background-modal"></div>
         <div id="wrapper">
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
@@ -38,7 +37,6 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     {% if not request.user.is_authenticated %}
-                        <li><a href="{% url 'accounts:register' %}">Registre-se</a></li>
                         <li><a href="{% url 'accounts:login' %}">Logue-se</a></li>
                     {% else %}
                         <li class="dropdown">
@@ -85,16 +83,13 @@
                                 <a id="charts" href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-bar-chart-o"></i> Gráficos <i class="fa fa-fw fa-caret-down"></i></a>
                                 <ul id="demo" class="collapse nav nav-second-level">
                                     <li>
-                                        <a href="#">Conhecimento Chave por Tendência</a>
+                                        <a href="#">TBD</a>
                                     </li>
                                     <li>
-                                        <a href="#">Ações e porcentagem de conclusão</a>
+                                        <a href="#">TBD</a>
                                     </li>
                                     <li>
-                                        <a href="#">Tarefa e porcentagem de conclusão</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Tendências por rota</a>
+                                        <a href="{% url 'pdic:r3' %}">Ações e porcentagem de conclusão</a>
                                     </li>
                                 </ul>
                             </li>

@@ -49,3 +49,5 @@ class TemaViewSet(ModelViewSet):
 class TarefaViewSet(ModelViewSet):
     queryset = Tarefa.objects.filter(ativa=True)
     serializer_class = TarefaSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = TarefaFilter

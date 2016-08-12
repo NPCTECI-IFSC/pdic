@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Lista de tarefas</h1>
+    {% if request.user.is_authenticated %}
     <a href="{% url 'pdic:create-tarefa' %}" class="btn btn-default btn-create">
         <i class="fa fa-plus" aria-hidden="true"></i>
         Adicionar
     </a>
+    {% endif %}
     {% if tarefas %}
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -16,8 +18,8 @@
                     <th>Descrição</th>
                     <th>Ação</th>
                     <th>Responsáveis</th>
-                    <th>Ativa</th>
                     {% if request.user.is_authenticated %}
+                    <th>Ativa</th>
                     <th>Opções</th>
                     {% endif %}
                 </tr>
@@ -33,9 +35,10 @@
                         <td>{{ tarefa.acao }}</td>
                         <td>
                             {% for responsavel in tarefa.responsaveis.all %}
-                                {{ responsavel.nome }},
+                                {{ responsavel.nome }};
                             {% endfor %}
                         </td>
+                        {% if request.user.is_authenticated %}
                         <td>
                             {% if tarefa.ativa %}
                                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -43,7 +46,6 @@
                                 <i class="fa fa-times" aria-hidden="true"></i>
                             {% endif %}
                         </td>
-                        {% if request.user.is_authenticated %}
                         <td>
                             <a href="{% url 'pdic:edit-tarefa' tarefa.id %}" class="btn btn-primary option-btn">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>

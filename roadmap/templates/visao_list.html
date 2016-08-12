@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Lista de visões</h1>
+    {% if request.user.is_authenticated %}
     <a href="{% url 'pdic:create-visao' %}" class="btn btn-default btn-create">
         <i class="fa fa-plus" aria-hidden="true"></i>
         Adicionar
     </a>
+    {% endif %}
     {% if visoes %}
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -12,8 +14,8 @@
                     <th>Descrição</th>
                     <th>Tipo</th>
                     <th>Rota</th>
-                    <th>Ativa</th>
                     {% if request.user.is_authenticated %}
+                    <th>Ativa</th>
                     <th>Opções</th>
                     {% endif %}
                 </tr>
@@ -24,6 +26,7 @@
                         <td>{{ visao.descricao }}</td>
                         <td>{{ visao.get_tipo_display }}</td>
                         <td>{{ visao.rota }}</td>
+                        {% if request.user.is_authenticated %}
                         <td>
                             {% if visao.ativa %}
                                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -31,7 +34,6 @@
                                 <i class="fa fa-times" aria-hidden="true"></i>
                             {% endif %}
                         </td>
-                        {% if request.user.is_authenticated %}
                         <td>
                             <a href="{% url 'pdic:edit-visao' visao.id %}" class="btn btn-primary option-btn">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>

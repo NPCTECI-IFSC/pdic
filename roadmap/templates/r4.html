@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <h1 id="chart-label">Tarefas:</h1>
+    <div id="chart"></div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages': ['gantt'], 'language': 'pt-BR'});
+    </script>
+    <script>
+        $(function(){
+            var dados = [];
+            $.ajax({
+                method: "GET",
+                url: "{% url 'tarefa-list' %}?acao={{ acao.id }}",
+                success: function(data){
+                    data.forEach(function(item){
+                        dados.push([
+                            String(item.id),
+                            item.descricao,
+                            null,
+                            new Date(item.data_inicio),
+                            new Date(item.data_fim),
+                            null,
+                            item.porcentagem,
+                            null
+                        ])
+                    });
+                }
+            }).then(function(){
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'ID');
+                    data.addColumn('string', 'Nome');
+                    data.addColumn('string', 'Recurso');
+                    data.addColumn('date', 'Data inicial');
+                    data.addColumn('date', 'Data final');
+                    data.addColumn('number', 'Duração');
+                    data.addColumn('number', 'Porcentagem');
+                    data.addColumn('string', 'Dependências');
+                    data.addRows(dados);
+                    var options = {
+                        height: 600,
+                        criticalPathEnabled: false,
+                    };
+                    var chart = new google.visualization.Gantt(document.getElementById('chart'));
+                    chart.draw(data, options);
+                }
+            });
+        });
+    </script>
+{% endblock %}
