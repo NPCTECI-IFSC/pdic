@@ -3,25 +3,22 @@
 {% load staticfiles %}
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>PDIC</title>
 
-        <link href="{% static 'bower/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
-        <link href="{% static 'bower/metisMenu/dist/metisMenu.min.css' %}" rel="stylesheet">
-        <link href="{% static 'bower/startbootstrap-sb-admin-2/dist/css/timeline.css' %}" rel="stylesheet">
-        <link href="{% static 'bower/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css' %}" rel="stylesheet">
-        <link href="{% static 'bower/morrisjs/morris.css' %}" rel="stylesheet">
-        <link href="{% static 'bower/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/metisMenu.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+        <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
-        <script src="{% static 'bower/jquery/dist/jquery.min.js' %}"></script>
-        <script src="{% static 'bower/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'bower/metisMenu/dist/metisMenu.min.js' %}"></script>
-        <script src="{% static 'bower/raphael/raphael.min.js' %}"></script>
-        <script src="{% static 'bower/morrisjs/morris.min.js' %}"></script>
-        <script src="{% static 'bower/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js' %}"></script>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/metisMenu.min.js' %}"></script>
+        <script src="{% static 'js/sb-admin-2.js' %}"></script>
+        <script src="{% static 'js/jquery.mask.min.js'%}"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -36,12 +33,12 @@
                     <a class="navbar-brand" href="{% url 'index' %}">PDIC - Rotas Estratégicas Setoriais</a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
-                    {% if not request.user.is_authenticated %}
+                    {% if not user.is_authenticated %}
                         <li><a href="{% url 'accounts:login' %}">Logue-se</a></li>
                     {% else %}
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                                <i class="fa fa-user fa-fw"></i> {{ user.nome }} <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>

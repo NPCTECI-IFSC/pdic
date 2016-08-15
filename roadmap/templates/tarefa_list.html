@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Lista de tarefas</h1>
-    {% if request.user.is_authenticated %}
+    {% if user.is_authenticated %}
     <a href="{% url 'pdic:create-tarefa' %}" class="btn btn-default btn-create">
         <i class="fa fa-plus" aria-hidden="true"></i>
         Adicionar
     </a>
     {% endif %}
+    <form class="navbar-form" role="search" method="GET" action="{% url 'pdic:list-tarefas' %}">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Pesquisar" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </form>
     {% if tarefas %}
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -18,7 +26,7 @@
                     <th>Descrição</th>
                     <th>Ação</th>
                     <th>Responsáveis</th>
-                    {% if request.user.is_authenticated %}
+                    {% if user.is_authenticated %}
                     <th>Ativa</th>
                     <th>Opções</th>
                     {% endif %}
@@ -38,7 +46,7 @@
                                 {{ responsavel.nome }};
                             {% endfor %}
                         </td>
-                        {% if request.user.is_authenticated %}
+                        {% if user.is_authenticated %}
                         <td>
                             {% if tarefa.ativa %}
                                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -60,7 +68,7 @@
             </tbody>
         </table>
     {% else %}
-        <p>Não há tarefas cadastradas.</p>
+        <p>Não foram encontradas tarefas.</p>
     {% endif %}
     {% if is_paginated %}
         <div class="pagination">

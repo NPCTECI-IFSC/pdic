@@ -51,5 +51,9 @@
             var url = "acoes/?fator=";
             getOptions($('#acoes'), $('#fatores').val(), 'descricao', url);
         });
+        if($('#id_visao').val()){
+            $('#id_visao').change();
+        };
+        $('#id_data_inicio, #id_data_fim').mask('00/00/0000');
     </script>
 {% endblock %}

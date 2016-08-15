@@ -1,7 +1,7 @@
 # encoding: utf-8
 from django import forms
 from roadmap.models import *
-from util import fix_fields
+from util.forms import fix_fields
 
 
 class TarefaForm(forms.ModelForm):
@@ -28,6 +28,16 @@ class TarefaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TarefaForm, self).__init__(*args, **kwargs)
         fix_fields(self.fields)
+
+    def clean(self):
+        super(TarefaForm, self).clean()
+        data_inicio = self.cleaned_data.get('data_inicio')
+        data_fim = self.cleaned_data.get('data_fim')
+        if data_fim < data_inicio:
+            raise forms.ValidationError(u'A data final não pode preceder a data inicial.')
+        if not self.data.get('acao'):
+            raise forms.ValidationError(u'A tarefa deve estar associada à uma ação.')
+        return self.cleaned_data
 
     def save(self, commit=True):
         acao = Acao.objects.get(id=self.data.get('acao'))
@@ -112,3 +122,11 @@ class AcaoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AcaoForm, self).__init__(*args, **kwargs)
         fix_fields(self.fields)
+
+    def clean(self):
+        super(AcaoForm, self).clean()
+        data_inicio = self.cleaned_data.get('data_inicio')
+        data_fim = self.cleaned_data.get('data_fim')
+        if data_fim < data_inicio:
+            raise forms.ValidationError(u'A data final não pode preceder a data inicial.')
+        return self.cleaned_data

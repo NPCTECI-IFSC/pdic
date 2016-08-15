@@ -53,7 +53,11 @@ urlpatterns = [
         name='delete-fator'
     ),
     url(r'^responsaveis/$', ResponsavelList.as_view(), name='list-responsaveis'),
-    url(r'^responsaveis/new/$', login_required(ResponsavelCreate.as_view()), name='create-resp'),
+    url(
+        r'^responsaveis/new/$',
+        login_required(ResponsavelCreate.as_view()),
+        name='create-responsavel'
+    ),
     url(
         r'^responsaveis/edit/(?P<pk>[0-9]+)/$',
         login_required(ResponsavelEdit.as_view()),
@@ -88,6 +92,6 @@ urlpatterns = [
         login_required(AcaoDelete.as_view()),
         name='delete-acao'
     ),
-    url(r'^relatorio3/$', Relatorio3.as_view(), name='r3'),
-    url(r'^relatorio4/(?P<pk>[0-9]+)/$', Relatorio4.as_view(), name='r4')
+    url(r'^relatorio/acoes/$', Relatorio3.as_view(), name='r3'),
+    url(r'^relatorio/tarefas/(?P<pk>[0-9]+)/$', Relatorio4.as_view(), name='r4')
 ]

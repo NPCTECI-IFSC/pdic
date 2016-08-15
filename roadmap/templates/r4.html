@@ -1,33 +1,34 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-    <h1 id="chart-label">Tarefas:</h1>
+    <h1 id="chart-label"></h1>
     <div id="chart"></div>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages': ['gantt'], 'language': 'pt-BR'});
-    </script>
+    <script type="text/javascript" src="{% static 'js/google-charts.min.js' %}"></script>
     <script>
+        google.charts.load('current', {'packages': ['gantt'], 'language': 'pt-BR'});
         $(function(){
             var dados = [];
             $.ajax({
                 method: "GET",
                 url: "{% url 'tarefa-list' %}?acao={{ acao.id }}",
                 success: function(data){
-                    data.forEach(function(item){
-                        dados.push([
-                            String(item.id),
-                            item.descricao,
-                            null,
-                            new Date(item.data_inicio),
-                            new Date(item.data_fim),
-                            null,
-                            item.porcentagem,
-                            null
-                        ])
-                    });
+                    if(data.length){
+                        data.forEach(function(item){
+                            dados.push([
+                                String(item.id),
+                                item.descricao,
+                                null,
+                                new Date(item.data_inicio),
+                                new Date(item.data_fim),
+                                null,
+                                item.porcentagem,
+                                null
+                            ])
+                        });
+                    }
                 }
             }).then(function(){
+                $('#chart-label').html('Tarefas da ação {{ acao }}').attr('title', '{{ acao.descricao }}');
                 google.charts.setOnLoadCallback(drawChart);
                 function drawChart() {
                     var data = new google.visualization.DataTable();

@@ -19,10 +19,13 @@ class TarefaList(generic.ListView):
     paginate_by = 15
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_admin:
-            return Tarefa.objects.all()
-        else:
-            return Tarefa.objects.filter(ativa=True)
+        q = self.request.GET.get('q', None)
+        query = Tarefa.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativa=True)
+        if q:
+            query = query.filter(descricao__icontains=q)
+        return query
 
 
 class TarefaCreate(generic.FormView):
@@ -75,10 +78,13 @@ class RotaList(generic.ListView):
     paginate_by = 15
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_admin:
-            return Rota.objects.all()
-        else:
-            return Rota.objects.filter(ativa=True)
+        q = self.request.GET.get('q', None)
+        query = Rota.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativa=True)
+        if q:
+            query = query.filter(nome__icontains=q)
+        return query
 
 
 class RotaCreate(generic.FormView):
@@ -131,10 +137,13 @@ class VisaoList(generic.ListView):
     paginate_by = 15
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_admin:
-            return Visao.objects.all()
-        else:
-            return Visao.objects.filter(ativa=True)
+        q = self.request.GET.get('q', None)
+        query = Visao.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativa=True)
+        if q:
+            query = query.filter(descricao__icontains=q)
+        return query
 
 
 class VisaoCreate(generic.FormView):
@@ -187,10 +196,13 @@ class FatorList(generic.ListView):
     paginate_by = 15
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_admin:
-            return Fator.objects.all()
-        else:
-            return Fator.objects.filter(ativo=True)
+        q = self.request.GET.get('q', None)
+        query = Fator.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativo=True)
+        if q:
+            query = query.filter(nome__icontains=q)
+        return query
 
 
 class FatorCreate(generic.FormView):
@@ -243,10 +255,13 @@ class ResponsavelList(generic.ListView):
     paginate_by = 15
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_admin:
-            return Responsavel.objects.all()
-        else:
-            return Responsavel.objects.filter(ativo=True)
+        q = self.request.GET.get('q', None)
+        query = Responsavel.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativo=True)
+        if q:
+            query = query.filter(nome__icontains=q)
+        return query
 
 
 class ResponsavelCreate(generic.FormView):
@@ -299,10 +314,13 @@ class TemaList(generic.ListView):
     paginate_by = 15
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_admin:
-            return Tema.objects.all()
-        else:
-            return Tema.objects.filter(ativo=True)
+        q = self.request.GET.get('q', None)
+        query = Tema.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativo=True)
+        if q:
+            query = query.filter(descricao__icontains=q)
+        return query
 
 
 class TemaCreate(generic.FormView):
@@ -355,10 +373,13 @@ class AcaoList(generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        if self.request.user.is_authenticated() and self.request.user.is_admin:
-            return Acao.objects.all()
-        else:
-            return Acao.objects.filter(ativa=True)
+        q = self.request.GET.get('q', None)
+        query = Acao.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativa=True)
+        if q:
+            query = query.filter(descricao__icontains=q)
+        return query
 
 
 class AcaoCreate(generic.FormView):
@@ -416,7 +437,7 @@ class Relatorio3(generic.ListView):
                 Sum('tarefas__porcentagem') / Count('tarefas'),
                 output_field=FloatField()
             )
-        )
+        ).order_by('data_inicio')
 
 
 class Relatorio4(generic.DetailView):

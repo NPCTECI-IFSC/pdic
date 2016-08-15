@@ -12,7 +12,8 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
-    "startbootstrap-sb-admin-2": "^3.3.7"
+    "startbootstrap-sb-admin-2": "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2.git#master",
+    "jquery-mask-plugin": "^1.14.0"
   },
   "resolutions": {
     "font-awesome": "^4.6.3"

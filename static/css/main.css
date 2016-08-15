@@ -28,3 +28,17 @@
     color: red;
     margin-top: 20px;
 }
+
+.navbar-form {
+    padding: 0px;
+}
+
+#page-wrapper {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.errorlist {
+    color: red;
+    list-style: none;
+    padding: 0px;
+}

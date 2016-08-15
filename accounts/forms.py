@@ -1,25 +1,7 @@
 # encoding: utf-8
-from .models import Usuario
 from django import forms
 from django.contrib.auth import authenticate
-from util import fix_fields
-
-
-class UsuarioForm(forms.ModelForm):
-    password = forms.CharField(max_length=128, widget=forms.PasswordInput)
-
-    class Meta:
-        model = Usuario
-        fields = ('nome', 'email', 'password', 'regiao', 'ativo')
-
-    def __init__(self, *args, **kwargs):
-        super(UsuarioForm, self).__init__(*args, **kwargs)
-        fix_fields(self.fields)
-
-    def save(self, commit=True):
-        password = self.cleaned_data.get('password')
-        self.instance.set_password(password)
-        super(UsuarioForm, self).save()
+from util.forms import fix_fields
 
 
 class LoginForm(forms.Form):
@@ -37,3 +19,4 @@ class LoginForm(forms.Form):
         user = authenticate(username=username, password=password)
         if (username and password) and not user:
             raise forms.ValidationError(u'Login ou senha inválidos')
+        return self.cleaned_data

@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Lista de visões</h1>
-    {% if request.user.is_authenticated %}
+    {% if user.is_authenticated %}
     <a href="{% url 'pdic:create-visao' %}" class="btn btn-default btn-create">
         <i class="fa fa-plus" aria-hidden="true"></i>
         Adicionar
     </a>
     {% endif %}
+    <form class="navbar-form" role="search" method="GET" action="{% url 'pdic:list-visoes' %}">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Pesquisar" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </form>
     {% if visoes %}
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -14,7 +22,7 @@
                     <th>Descrição</th>
                     <th>Tipo</th>
                     <th>Rota</th>
-                    {% if request.user.is_authenticated %}
+                    {% if user.is_authenticated %}
                     <th>Ativa</th>
                     <th>Opções</th>
                     {% endif %}
@@ -26,7 +34,7 @@
                         <td>{{ visao.descricao }}</td>
                         <td>{{ visao.get_tipo_display }}</td>
                         <td>{{ visao.rota }}</td>
-                        {% if request.user.is_authenticated %}
+                        {% if user.is_authenticated %}
                         <td>
                             {% if visao.ativa %}
                                 <i class="fa fa-check" aria-hidden="true"></i>
