@@ -1,4 +1,6 @@
 # encoding: utf-8
+from __future__ import unicode_literals
+
 from pdic.api.views import *
 from rest_framework.routers import DefaultRouter
 

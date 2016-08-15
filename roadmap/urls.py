@@ -1,7 +1,9 @@
 # encoding: utf-8
-from .views import *
+from __future__ import unicode_literals
+
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
+from roadmap.views import *
 
 urlpatterns = [
     url(r'^tarefas/$', TarefaList.as_view(), name='list-tarefas'),

@@ -23,37 +23,5 @@
         </p>
         <p><button type="submit" class="btn btn-primary">Salvar</button></p>
     </form>
-    <script>
-        var getOptions = function(element, value, key, APIUrl){
-            if(value){
-                $.ajax({
-                    method: "GET",
-                    url: "/api/" + APIUrl + value,
-                    success: function(data){
-                        var options = "<option value=''>Selecione</option>";
-                        element.removeAttr('disabled');
-                        data.forEach(function(item){
-                            options += "<option value='" + item.id + "'>" + item[key] + "</option>";
-                        });
-                        element.html(options);
-                    }
-                });
-            } else {
-                $('.combo').html('').attr('disabled', '');
-            }
-        }
-        $('#id_visao').change(function(){
-            var url = "fatores/?visao=";
-            getOptions($('#fatores'), $('#id_visao').val(), 'nome', url);
-            $('#acoes').html('').attr('disabled', '');
-        });
-        $('#fatores').change(function(){
-            var url = "acoes/?fator=";
-            getOptions($('#acoes'), $('#fatores').val(), 'descricao', url);
-        });
-        if($('#id_visao').val()){
-            $('#id_visao').change();
-        };
-        $('#id_data_inicio, #id_data_fim').mask('00/00/0000');
-    </script>
+    <script>var getOptions=function(a,b,c,d){b?$.ajax({method:"GET",url:"/api/"+d+b,success:function(b){var d="<option value=''>Selecione</option>";a.removeAttr("disabled"),b.forEach(function(a){d+="<option value='"+a.id+"'>"+a[c]+"</option>"}),a.html(d)}}):$(".combo").html("").attr("disabled","")};$("#id_visao").change(function(){var a="fatores/?visao=";getOptions($("#fatores"),$("#id_visao").val(),"nome",a),$("#acoes").html("").attr("disabled","")}),$("#fatores").change(function(){var a="acoes/?fator=";getOptions($("#acoes"),$("#fatores").val(),"descricao",a)}),$("#id_visao").val()&&$("#id_visao").change(),$("#id_data_inicio, #id_data_fim").mask("00/00/0000");</script>
 {% endblock %}

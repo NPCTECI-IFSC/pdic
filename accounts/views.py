@@ -1,4 +1,6 @@
 # encoding: utf-8
+from __future__ import unicode_literals
+
 from accounts.forms import *
 from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse

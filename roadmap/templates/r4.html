@@ -4,51 +4,5 @@
     <h1 id="chart-label"></h1>
     <div id="chart"></div>
     <script type="text/javascript" src="{% static 'js/google-charts.min.js' %}"></script>
-    <script>
-        google.charts.load('current', {'packages': ['gantt'], 'language': 'pt-BR'});
-        $(function(){
-            var dados = [];
-            $.ajax({
-                method: "GET",
-                url: "{% url 'tarefa-list' %}?acao={{ acao.id }}",
-                success: function(data){
-                    if(data.length){
-                        data.forEach(function(item){
-                            dados.push([
-                                String(item.id),
-                                item.descricao,
-                                null,
-                                new Date(item.data_inicio),
-                                new Date(item.data_fim),
-                                null,
-                                item.porcentagem,
-                                null
-                            ])
-                        });
-                    }
-                }
-            }).then(function(){
-                $('#chart-label').html('Tarefas da ação {{ acao }}').attr('title', '{{ acao.descricao }}');
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = new google.visualization.DataTable();
-                    data.addColumn('string', 'ID');
-                    data.addColumn('string', 'Nome');
-                    data.addColumn('string', 'Recurso');
-                    data.addColumn('date', 'Data inicial');
-                    data.addColumn('date', 'Data final');
-                    data.addColumn('number', 'Duração');
-                    data.addColumn('number', 'Porcentagem');
-                    data.addColumn('string', 'Dependências');
-                    data.addRows(dados);
-                    var options = {
-                        height: 600,
-                        criticalPathEnabled: false,
-                    };
-                    var chart = new google.visualization.Gantt(document.getElementById('chart'));
-                    chart.draw(data, options);
-                }
-            });
-        });
-    </script>
+    <script>google.charts.load("current",{packages:["gantt"],language:"pt-BR"}),$(function(){var a=[];$.ajax({method:"GET",url:"{% url 'tarefa-list' %}?acao={{ acao.id }}",success:function(n){n.length&&n.forEach(function(n){a.push([String(n.id),n.descricao,null,new Date(n.data_inicio),new Date(n.data_fim),null,n.porcentagem,null])})}}).then(function(){function n(){var n=new google.visualization.DataTable;n.addColumn("string","ID"),n.addColumn("string","Nome"),n.addColumn("string","Recurso"),n.addColumn("date","Data inicial"),n.addColumn("date","Data final"),n.addColumn("number","Duração"),n.addColumn("number","Porcentagem"),n.addColumn("string","Dependências"),n.addRows(a);var t={height:600,criticalPathEnabled:!1},e=new google.visualization.Gantt(document.getElementById("chart"));e.draw(n,t)}$("#chart-label").html("Tarefas da ação {{ acao }}").attr("title","{{ acao.descricao }}"),google.charts.setOnLoadCallback(n)})});</script>
 {% endblock %}

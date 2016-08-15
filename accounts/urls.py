@@ -1,5 +1,7 @@
 # encoding: utf-8
-from .views import *
+from __future__ import unicode_literals
+
+from accounts.views import *
 from django.conf.urls import url
 
 urlpatterns = [
