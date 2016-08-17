@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Cadastro de {{ nome_form }}</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p>
-            <label>Fator:</label>
-            <select id="fatores" class="form-control combo" name="fator" disabled>
-            </select>
-        </p>
-        <p>
-            <label>Ação:</label>
-            <select id="acoes" class="form-control combo" name="acao"
-                {% if not object.acao %}
-                    disabled
+    <div class="col-md-7">
+        <h1>Cadastro de {{ nome_form }}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>
+                <label>Fator:</label>
+                <select id="fatores" class="form-control combo" name="fator" disabled>
+                </select>
+            </p>
+            <p>
+                <label>Ação:</label>
+                <select id="acoes" class="form-control combo" name="acao"
+                    {% if not object.acao %}
+                        disabled
+                    {% endif %}
+                >
+                {% if object.acao %}
+                    <option value="{{ object.acao.id }}">{{ object.acao }}</option>
                 {% endif %}
-            >
-            {% if object.acao %}
-                <option value="{{ object.acao.id }}">{{ object.acao }}</option>
-            {% endif %}
-            </select>
-        </p>
-        <p><button type="submit" class="btn btn-primary">Salvar</button></p>
-    </form>
+                </select>
+            </p>
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
+        </form>
+    </div>
     <script>var getOptions=function(a,b,c,d){b?$.ajax({method:"GET",url:"/api/"+d+b,success:function(b){var d="<option value=''>Selecione</option>";a.removeAttr("disabled"),b.forEach(function(a){d+="<option value='"+a.id+"'>"+a[c]+"</option>"}),a.html(d)}}):$(".combo").html("").attr("disabled","")};$("#id_visao").change(function(){var a="fatores/?visao=";getOptions($("#fatores"),$("#id_visao").val(),"nome",a),$("#acoes").html("").attr("disabled","")}),$("#fatores").change(function(){var a="acoes/?fator=";getOptions($("#acoes"),$("#fatores").val(),"descricao",a)}),$("#id_visao").val()&&$("#id_visao").change(),$("#id_data_inicio, #id_data_fim").mask("00/00/0000");</script>
 {% endblock %}

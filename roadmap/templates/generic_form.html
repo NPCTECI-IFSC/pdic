@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{{ nome_form }}</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p><button type="submit" class="btn btn-primary">Salvar</button></p>
-    </form>
+    <div class="col-md-7">
+        <h1>{{ nome_form }}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
+        </form>
+    </div>
     <script>$('#id_data_inicio, #id_data_fim').mask('00/00/0000');</script>
 {% endblock %}

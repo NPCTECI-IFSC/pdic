@@ -1,6 +1,7 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
+from accounts.models import *
 from django import forms
 from roadmap.models import *
 from util.forms import fix_fields
@@ -22,7 +23,7 @@ class TarefaForm(forms.ModelForm):
             'data_fim',
             'porcentagem',
             'descricao',
-            'responsaveis',
+            'responsavel',
             'ativa',
             'visao'
         )

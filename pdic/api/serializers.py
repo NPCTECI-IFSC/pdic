@@ -78,7 +78,7 @@ class AcaoSerializer(serializers.ModelSerializer):
 class TarefaSerializer(serializers.ModelSerializer):
 
     acao = AcaoSerializer()
-    responsaveis = UsuarioSerializer(many=True)
+    responsavel = UsuarioSerializer()
 
     class Meta:
         model = Tarefa
@@ -91,5 +91,5 @@ class TarefaSerializer(serializers.ModelSerializer):
             'porcentagem',
             'descricao',
             'acao',
-            'responsaveis'
+            'responsavel'
         )
