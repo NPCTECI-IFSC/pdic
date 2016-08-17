@@ -199,7 +199,7 @@ class FatorList(generic.ListView):
         q = self.request.GET.get('q', None)
         query = Fator.objects.all()
         if not self.request.user.is_authenticated():
-            query = query.filter(ativo=True)
+            query = query.filter(ativa=True)
         if q:
             query = query.filter(nome__icontains=q)
         return query
@@ -258,7 +258,7 @@ class ResponsavelList(generic.ListView):
         q = self.request.GET.get('q', None)
         query = Responsavel.objects.all()
         if not self.request.user.is_authenticated():
-            query = query.filter(ativo=True)
+            query = query.filter(ativa=True)
         if q:
             query = query.filter(nome__icontains=q)
         return query
@@ -278,7 +278,9 @@ class ResponsavelCreate(generic.FormView):
         return super(ResponsavelCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ResponsavelCreate, self).get_context_data(*args, **kwargs)
+        context = super(
+            ResponsavelCreate, self
+        ).get_context_data(*args, **kwargs)
         context['nome_form'] = u'Cadastro de responsável'
         return context
 
@@ -293,7 +295,9 @@ class ResponsavelEdit(generic.UpdateView):
         return reverse(self.success_url)
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ResponsavelEdit, self).get_context_data(*args, **kwargs)
+        context = super(
+            ResponsavelEdit, self
+        ).get_context_data(*args, **kwargs)
         context['nome_form'] = u'Edição de responsável'
         return context
 
@@ -317,7 +321,7 @@ class TemaList(generic.ListView):
         q = self.request.GET.get('q', None)
         query = Tema.objects.all()
         if not self.request.user.is_authenticated():
-            query = query.filter(ativo=True)
+            query = query.filter(ativa=True)
         if q:
             query = query.filter(descricao__icontains=q)
         return query

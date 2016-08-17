@@ -46,7 +46,7 @@ class Usuario(AbstractBaseUser):
         null=True,
         db_column='regiao_usuario'
     )
-    ativo = models.BooleanField(
+    ativa = models.BooleanField(
         verbose_name=u'Ativo',
         default=True,
         db_column='ativa_usuario'

@@ -70,7 +70,9 @@ class Visao(models.Model):
         verbose_name_plural = u'Visões'
 
     def __str__(self):
-        return '%s...' % self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        return '%s...' % (
+            self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        )
 
 
 class Fator(models.Model):
@@ -80,7 +82,7 @@ class Fator(models.Model):
         max_length=100,
         db_column='nome_fator'
     )
-    ativo = models.BooleanField(
+    ativa = models.BooleanField(
         verbose_name=u'Ativo',
         default=True,
         db_column='ativa_fator'
@@ -107,7 +109,7 @@ class Responsavel(models.Model):
         max_length=100,
         db_column='nome_resp'
     )
-    ativo = models.BooleanField(
+    ativa = models.BooleanField(
         verbose_name=u'Ativo',
         default=True,
         db_column='tb_responsavel'
@@ -134,7 +136,7 @@ class Tema(models.Model):
         max_length=400,
         db_column='assunto_tema'
     )
-    ativo = models.BooleanField(
+    ativa = models.BooleanField(
         verbose_name=u'Ativo',
         default=True,
         db_column='ativa_tema'
@@ -150,7 +152,9 @@ class Tema(models.Model):
         verbose_name_plural = u'Temas'
 
     def __str__(self):
-        return '%s...' % self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        return '%s...' % (
+            self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        )
 
 
 class Acao(models.Model):
@@ -226,7 +230,9 @@ class Acao(models.Model):
         verbose_name_plural = u'Ações'
 
     def __str__(self):
-        return '%s...' % self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        return '%s...' % (
+            self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        )
 
 
 class Tarefa(models.Model):

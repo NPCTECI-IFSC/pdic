@@ -10,7 +10,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Usuario
-        fields = ('id', 'nome', 'email', 'regiao', 'ativo')
+        fields = ('id', 'nome', 'email', 'regiao', 'ativa')
 
 
 class RotaSerializer(serializers.ModelSerializer):
@@ -35,21 +35,21 @@ class FatorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Fator
-        fields = ('id', 'nome', 'ativo', 'visao')
+        fields = ('id', 'nome', 'ativa', 'visao')
 
 
 class ResponsavelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Responsavel
-        fields = ('id', 'nome', 'ativo')
+        fields = ('id', 'nome', 'ativa')
 
 
 class TemaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tema
-        fields = ('id', 'descricao', 'assunto', 'ativo', 'prioridade')
+        fields = ('id', 'descricao', 'assunto', 'ativa', 'prioridade')
 
 
 class AcaoSerializer(serializers.ModelSerializer):

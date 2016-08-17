@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet
 
 
 class UsuarioViewSet(ModelViewSet):
-    queryset = Usuario.objects.filter(ativo=True)
+    queryset = Usuario.objects.filter(ativa=True)
     serializer_class = UsuarioSerializer
 
 
@@ -23,7 +23,7 @@ class VisaoViewSet(ModelViewSet):
 
 
 class FatorViewSet(ModelViewSet):
-    queryset = Fator.objects.filter(ativo=True)
+    queryset = Fator.objects.filter(ativa=True)
     serializer_class = FatorSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_class = FatorFilter
@@ -37,12 +37,12 @@ class AcaoViewSet(ModelViewSet):
 
 
 class ResponsavelViewSet(ModelViewSet):
-    queryset = Responsavel.objects.filter(ativo=True)
+    queryset = Responsavel.objects.filter(ativa=True)
     serializer_class = ResponsavelSerializer
 
 
 class TemaViewSet(ModelViewSet):
-    queryset = Tema.objects.filter(ativo=True)
+    queryset = Tema.objects.filter(ativa=True)
     serializer_class = TemaSerializer
 
 

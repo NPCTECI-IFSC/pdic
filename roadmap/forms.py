@@ -73,7 +73,7 @@ class FatorForm(forms.ModelForm):
 
     class Meta:
         model = Fator
-        fields = ('nome', 'ativo', 'visao')
+        fields = ('nome', 'ativa', 'visao')
 
     def __init__(self, *args, **kwargs):
         super(FatorForm, self).__init__(*args, **kwargs)
@@ -84,7 +84,7 @@ class ResponsavelForm(forms.ModelForm):
 
     class Meta:
         model = Responsavel
-        fields = ('nome', 'ativo')
+        fields = ('nome', 'ativa')
 
     def __init__(self, *args, **kwargs):
         super(ResponsavelForm, self).__init__(*args, **kwargs)
@@ -95,7 +95,7 @@ class TemaForm(forms.ModelForm):
 
     class Meta:
         model = Tema
-        fields = ('descricao', 'assunto', 'ativo', 'prioridade')
+        fields = ('descricao', 'assunto', 'ativa', 'prioridade')
 
     def __init__(self, *args, **kwargs):
         super(TemaForm, self).__init__(*args, **kwargs)
