@@ -36,6 +36,11 @@ class TarefaCreate(generic.FormView):
     def get_success_url(self):
         return reverse(self.success_url)
 
+    def get_initial(self):
+        initial = super(TarefaCreate, self).get_initial()
+        initial['responsavel'] = self.request.user
+        return initial
+
     def form_valid(self, form):
         if form.is_valid():
             form.save()

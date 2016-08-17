@@ -25,7 +25,7 @@
                     <th>Porcentagem</th>
                     <th>Descrição</th>
                     <th>Ação</th>
-                    <th>Responsáveis</th>
+                    <th>Responsável</th>
                     {% if user.is_authenticated %}
                     <th>Ativa</th>
                     <th>Opções</th>
@@ -41,11 +41,7 @@
                         <td>{{ tarefa.porcentagem }}%</td>
                         <td>{{ tarefa.descricao }}</td>
                         <td>{{ tarefa.acao }}</td>
-                        <td>
-                            {% for responsavel in tarefa.responsaveis.all %}
-                                {{ responsavel.nome }};
-                            {% endfor %}
-                        </td>
+                        <td>{{ tarefa.responsavel.nome }}</td>
                         {% if user.is_authenticated %}
                         <td>
                             {% if tarefa.ativa %}

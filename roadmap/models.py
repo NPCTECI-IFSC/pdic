@@ -271,11 +271,11 @@ class Tarefa(models.Model):
         related_name='tarefas',
         db_column='tb_acao_id'
     )
-    responsaveis = models.ManyToManyField(
+    responsavel = models.ForeignKey(
         Usuario,
-        verbose_name=u'Responsáveis',
+        verbose_name=u'Responsável',
         related_name='tarefas',
-        db_table='tb_tarefa_has_tb_responsavel'
+        db_column='tb_usuario_id'
     )
 
     class Meta:
