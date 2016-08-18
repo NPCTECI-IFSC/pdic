@@ -36,7 +36,7 @@ class Rota(models.Model):
         verbose_name = u'Rota'
         verbose_name_plural = u'Rotas'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.nome
 
 
@@ -69,7 +69,7 @@ class Visao(models.Model):
         verbose_name = u'Visão'
         verbose_name_plural = u'Visões'
 
-    def __str__(self):
+    def __unicode__(self):
         return '%s...' % (
             self.descricao[:20] if len(self.descricao) > 20 else self.descricao
         )
@@ -98,7 +98,7 @@ class Fator(models.Model):
         verbose_name = u'Fator'
         verbose_name_plural = u'Fatores'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.nome
 
 
@@ -120,7 +120,7 @@ class Responsavel(models.Model):
         verbose_name = u'Responsável'
         verbose_name_plural = u'Responsáveis'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.nome
 
 
@@ -151,7 +151,7 @@ class Tema(models.Model):
         verbose_name = u'Tema'
         verbose_name_plural = u'Temas'
 
-    def __str__(self):
+    def __unicode__(self):
         return '%s...' % (
             self.descricao[:20] if len(self.descricao) > 20 else self.descricao
         )
@@ -229,7 +229,7 @@ class Acao(models.Model):
         verbose_name = u'Ação'
         verbose_name_plural = u'Ações'
 
-    def __str__(self):
+    def __unicode__(self):
         return '%s...' % (
             self.descricao[:20] if len(self.descricao) > 20 else self.descricao
         )

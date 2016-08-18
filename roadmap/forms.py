@@ -36,7 +36,7 @@ class TarefaForm(forms.ModelForm):
         super(TarefaForm, self).clean()
         data_inicio = self.cleaned_data.get('data_inicio')
         data_fim = self.cleaned_data.get('data_fim')
-        if data_fim < data_inicio:
+        if (data_fim and data_inicio) and data_fim < data_inicio:
             raise forms.ValidationError(u'A data final não pode preceder a data inicial.')
         if not self.data.get('acao'):
             raise forms.ValidationError(u'A tarefa deve estar associada à uma ação.')
@@ -130,6 +130,6 @@ class AcaoForm(forms.ModelForm):
         super(AcaoForm, self).clean()
         data_inicio = self.cleaned_data.get('data_inicio')
         data_fim = self.cleaned_data.get('data_fim')
-        if data_fim < data_inicio:
+        if (data_fim and data_inicio) and data_fim < data_inicio:
             raise forms.ValidationError(u'A data final não pode preceder a data inicial.')
         return self.cleaned_data
