@@ -285,3 +285,63 @@ class Tarefa(models.Model):
 
     def __unicode__(self):
         return '{} - {}%'.format(self.get_status_display(), self.porcentagem)
+
+
+class Tendencia(models.Model):
+    id = models.AutoField(primary_key=True, db_column='id_tendencia_setorial')
+    descricao = models.TextField(
+        verbose_name=u'Descrição',
+        max_length=455,
+        db_column='descricao'
+    )
+    rota = models.ForeignKey(
+        Rota,
+        verbose_name=u'Rota',
+        related_name='tendencias',
+        db_column='tb_rota_id'
+    )
+    ativa = models.BooleanField(
+        verbose_name=u'Ativa',
+        default=True,
+        db_column='ativa_tendencia'
+    )
+
+    class Meta:
+        db_table = 'tb_tendencia_setorial'
+        verbose_name = u'Tendência setorial'
+        verbose_name_plural = u'Tendências setoriais'
+
+    def __unicode__(self):
+        return '%s...' % (
+            self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        )
+
+
+class Conhecimento(models.Model):
+    id = models.AutoField(primary_key=True, db_column='id_conhecimento_chave')
+    descricao = models.TextField(
+        verbose_name=u'Descrição',
+        max_length=455,
+        db_column='descricao'
+    )
+    tendencia = models.ForeignKey(
+        Tendencia,
+        verbose_name=u'Tendência',
+        related_name='conhecimentos',
+        db_column='tb_tendencia_setorial_id'
+    )
+    ativa = models.BooleanField(
+        verbose_name=u'Ativa',
+        default=True,
+        db_column='ativa_conhecimento'
+    )
+
+    class Meta:
+        db_table = 'tb_conhecimento_chave'
+        verbose_name = u'Conhecimento chave'
+        verbose_name_plural = u'Conhecimentos chave'
+
+    def __unicode__(self):
+        return '%s...' % (
+            self.descricao[:20] if len(self.descricao) > 20 else self.descricao
+        )

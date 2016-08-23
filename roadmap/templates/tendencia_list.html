@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Lista de tendências setoriais</h1>
+    {% if user.is_authenticated %}
+    <a href="{% url 'pdic:create-tendencia' %}" class="btn btn-default btn-create">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Adicionar
+    </a>
+    {% endif %}
+    <form class="navbar-form" role="search" method="GET" action="{% url 'pdic:list-tendencias' %}">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Pesquisar" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </form>
+    {% if tendencias %}
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Rota</th>
+                    {% if user.is_authenticated %}
+                    <th>Ativa</th>
+                    <th>Opções</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for tendencia in tendencias %}
+                    <tr>
+                        <td>{{ tendencia.descricao }}</td>
+                        <td>{{ tendencia.rota }}</td>
+                        {% if user.is_authenticated %}
+                        <td>
+                            {% if tendencia.ativa %}
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'pdic:edit-tendencia' tendencia.id %}" class="btn btn-primary option-btn">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                            <a href="{% url 'pdic:delete-tendencia' tendencia.id %}" class="btn btn-danger option-btn">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Não há tendências setoriais cadastradas.</p>
+    {% endif %}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'pdic:list-tendencias' %}?page={{ page_obj.previous_page_number }}">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+                <span class="page-current">
+                    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'pdic:list-tendencias' %}?page={{ page_obj.next_page_number }}">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

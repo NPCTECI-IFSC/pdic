@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div class="col-md-7">
+        <h1>{{ nome_form }}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>
+                <label>Tendencia:</label>
+                <select id="tendencias" class="form-control combo" name="tendencia"
+                    {% if not object.tendencia %}
+                        disabled
+                    {% endif %}
+                    >
+                    {% if object.tendencia %}
+                        <option value="{{ object.tendencia.id }}">{{ object.tendencia }}</option>
+                    {% endif %}
+                </select>
+            </p>
+            <p><button type="submit" class="btn btn-primary">Salvar</button></p>
+        </form>
+    </div>
+    <script src="{% static 'js/form-filter.js' %}"></script>
+    <script>
+        $("#id_rota").change(function() {
+            var a = "tendencias/?rota=";
+            getOptions($("#tendencias"), $("#id_rota").val(), "descricao", a);
+	    $("#tendencias").html("").attr("disabled", "")
+        });
+    </script>
+{% endblock %}

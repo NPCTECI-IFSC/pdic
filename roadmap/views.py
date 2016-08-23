@@ -434,6 +434,132 @@ class AcaoDelete(generic.edit.DeleteView):
         return reverse(self.success_url)
 
 
+class TendenciaList(generic.ListView):
+    template_name = 'tendencia_list.html'
+    context_object_name = 'tendencias'
+    model = Tendencia
+    paginate_by = 10
+
+    def get_queryset(self):
+        q = self.request.GET.get('q', None)
+        query = Tendencia.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativa=True)
+        if q:
+            query = query.filter(descricao__icontains=q)
+        return query
+
+
+class TendenciaCreate(generic.FormView):
+    template_name = 'generic_form.html'
+    form_class = TendenciaForm
+    success_url = 'pdic:list-tendencias'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+        return super(TendenciaCreate, self).form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(TendenciaCreate, self).get_context_data(*args, **kwargs)
+        context['nome_form'] = u'Cadastro de tendência setorial'
+        return context
+
+
+class TendenciaEdit(generic.edit.UpdateView):
+    template_name = 'generic_form.html'
+    form_class = TendenciaForm
+    model = Tendencia
+    success_url = 'pdic:list-tendencias'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(TendenciaEdit, self).get_context_data(*args, **kwargs)
+        context['nome_form'] = u'Edição de tendência setorial'
+        return context
+
+
+class TendenciaDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Tendencia
+    success_url = 'pdic:list-tendencias'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+
+class ConhecimentoList(generic.ListView):
+    template_name = 'conhecimento_list.html'
+    context_object_name = 'conhecimentos'
+    model = Conhecimento
+    paginate_by = 10
+
+    def get_queryset(self):
+        q = self.request.GET.get('q', None)
+        query = Conhecimento.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativa=True)
+        if q:
+            query = query.filter(descricao__icontains=q)
+        return query
+
+
+class ConhecimentoCreate(generic.FormView):
+    template_name = 'conhecimento_form.html'
+    form_class = ConhecimentoForm
+    success_url = 'pdic:list-conhecimentos'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+        return super(ConhecimentoCreate, self).form_valid(form)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ConhecimentoCreate, self).get_context_data(*args, **kwargs)
+        context['nome_form'] = u'Cadastro de conhecimento chave'
+        return context
+
+
+class ConhecimentoEdit(generic.edit.UpdateView):
+    template_name = 'conhecimento_form.html'
+    form_class = ConhecimentoForm
+    model = Conhecimento
+    success_url = 'pdic:list-conhecimentos'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ConhecimentoEdit, self).get_context_data(*args, **kwargs)
+        context['nome_form'] = u'Edição de conhecimento chave'
+        return context
+
+
+class ConhecimentoDelete(generic.edit.DeleteView):
+    template_name = 'generic_delete.html'
+    model = Conhecimento
+    success_url = 'pdic:list-conhecimentos'
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+
+class Relatorio1(generic.TemplateView):
+    pass
+
+
+class Relatorio2(generic.TemplateView):
+    pass
+
+
 class Relatorio3(generic.ListView):
     template_name = 'r3.html'
     model = Acao

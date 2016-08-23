@@ -51,3 +51,15 @@ class TarefaViewSet(ModelViewSet):
     serializer_class = TarefaSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_class = TarefaFilter
+
+
+class TendenciaViewSet(ModelViewSet):
+    queryset = Tendencia.objects.filter(ativa=True)
+    serializer_class = TendenciaSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = TendenciaFilter
+
+
+class ConhecimentoViewSet(ModelViewSet):
+    queryset = Conhecimento.objects.filter(ativa=True)
+    serializer_class = ConhecimentoSerializer

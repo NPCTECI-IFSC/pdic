@@ -93,3 +93,31 @@ class TarefaSerializer(serializers.ModelSerializer):
             'acao',
             'responsavel'
         )
+
+
+class TendenciaSerializer(serializers.ModelSerializer):
+
+    rota = RotaSerializer()
+
+    class Meta:
+        model = Tendencia
+        fields = (
+            'id',
+            'descricao',
+            'rota',
+            'ativa'
+        )
+
+
+class ConhecimentoSerializer(serializers.ModelSerializer):
+
+    tendencia = TendenciaSerializer()
+
+    class Meta:
+        model = Conhecimento
+        fields = (
+            'id',
+            'descricao',
+            'tendencia',
+            'ativa'
+        )

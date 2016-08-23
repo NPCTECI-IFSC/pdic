@@ -30,3 +30,12 @@ class AcaoFilter(django_filters.FilterSet):
         fields = {
             'fator': ['exact']
         }
+
+
+class TendenciaFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = Tendencia
+        fields = {
+            'rota': ['exact']
+        }

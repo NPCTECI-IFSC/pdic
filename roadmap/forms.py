@@ -133,3 +133,51 @@ class AcaoForm(forms.ModelForm):
         if (data_fim and data_inicio) and data_fim < data_inicio:
             raise forms.ValidationError(u'A data final não pode preceder a data inicial.')
         return self.cleaned_data
+
+
+class TendenciaForm(forms.ModelForm):
+
+    class Meta:
+        model = Tendencia
+        fields = (
+            'descricao',
+            'rota',
+            'ativa'
+        )
+
+    def __init__(self, *args, **kwargs):
+        super(TendenciaForm, self).__init__(*args, **kwargs)
+        fix_fields(self.fields)
+
+
+class ConhecimentoForm(forms.ModelForm):
+
+    rota = forms.ModelChoiceField(
+        queryset=Rota.objects.filter(ativa=True),
+        label=u'Rota',
+        required=False
+    )
+
+    class Meta:
+        model = Conhecimento
+        fields = (
+            'descricao',
+            'ativa'
+        )
+
+    def __init__(self, *args, **kwargs):
+        super(ConhecimentoForm, self).__init__(*args, **kwargs)
+        fix_fields(self.fields)
+
+    def clean(self):
+        super(ConhecimentoForm, self).clean()
+        if not self.data.get('tendencia'):
+            raise forms.ValidationError(
+                u'O conhecimento chave deve estar associado à uma tendência setorial.'
+            )
+        return self.cleaned_data
+
+    def save(self, commit=True):
+        tendencia = Tendencia.objects.get(id=self.data.get('tendencia'))
+        self.instance.tendencia = tendencia
+        return super(ConhecimentoForm, self).save()

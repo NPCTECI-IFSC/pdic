@@ -94,6 +94,34 @@ urlpatterns = [
         login_required(AcaoDelete.as_view()),
         name='delete-acao'
     ),
+    url(r'^tendencias/$', TendenciaList.as_view(), name='list-tendencias'),
+    url(r'^tendencias/new/$', login_required(TendenciaCreate.as_view()), name='create-tendencia'),
+    url(
+        r'^tendencias/edit/(?P<pk>[0-9]+)/$',
+        login_required(TendenciaEdit.as_view()),
+        name='edit-tendencia'
+    ),
+    url(
+        r'^tendencias/delete/(?P<pk>[0-9]+)/$',
+        login_required(TendenciaDelete.as_view()),
+        name='delete-tendencia'
+    ),
+    url(r'^conhecimentos/$', ConhecimentoList.as_view(), name='list-conhecimentos'),
+    url(
+        r'^conhecimentos/new/$',
+        login_required(ConhecimentoCreate.as_view()),
+        name='create-conhecimento'
+    ),
+    url(
+        r'^conhecimentos/edit/(?P<pk>[0-9]+)/$',
+        login_required(ConhecimentoEdit.as_view()),
+        name='edit-conhecimento'
+    ),
+    url(
+        r'^conhecimentos/delete/(?P<pk>[0-9]+)/$',
+        login_required(ConhecimentoDelete.as_view()),
+        name='delete-conhecimento'
+    ),
     url(r'^relatorio/acoes/$', Relatorio3.as_view(), name='r3'),
     url(r'^relatorio/tarefas/(?P<pk>[0-9]+)/$', Relatorio4.as_view(), name='r4')
 ]
