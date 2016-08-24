@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="col-md-7">
+        <h1>Detalhes de tarefa</h1>
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>{{ tarefa }}</b></div>
+            <div class="panel-body">
+                <p>Descrição: {{ tarefa.descricao }}</p>
+                <p>Período: {{ tarefa.data_inicio }} à {{ tarefa.data_fim }}</p>
+                <p>Ação: {{ tarefa.acao.descricao }}</p>
+                <p>Responsável: {{ tarefa.responsavel }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

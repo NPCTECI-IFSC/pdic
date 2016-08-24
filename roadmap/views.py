@@ -28,6 +28,12 @@ class TarefaList(generic.ListView):
         return query
 
 
+class TarefaDetail(generic.DetailView):
+    template_name = 'tarefa_detail.html'
+    context_object_name = 'tarefa'
+    model = Tarefa
+
+
 class TarefaCreate(generic.FormView):
     template_name = 'tarefa_form.html'
     form_class = TarefaForm
@@ -391,6 +397,12 @@ class AcaoList(generic.ListView):
         return query
 
 
+class AcaoDetail(generic.DetailView):
+    template_name = 'acao_detail.html'
+    context_object_name = 'acao'
+    model = Acao
+
+
 class AcaoCreate(generic.FormView):
     template_name = 'generic_form.html'
     form_class = AcaoForm
@@ -552,8 +564,10 @@ class ConhecimentoDelete(generic.edit.DeleteView):
         return reverse(self.success_url)
 
 
-class Relatorio1(generic.TemplateView):
-    pass
+class Relatorio1(generic.ListView):
+    template_name = 'r1.html'
+    model = Rota
+    context_object_name = 'rotas'
 
 
 class Relatorio2(generic.TemplateView):

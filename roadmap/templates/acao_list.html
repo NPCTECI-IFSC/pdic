@@ -21,18 +21,11 @@
                 <tr>
                     <th>Descrição</th>
                     <th>Motivo</th>
-                    <th>Valor</th>
-                    <th>Data de início</th>
-                    <th>Data final</th>
-                    <th>Local</th>
-                    <th>Tipo</th>
-                    <th>Responsável</th>
                     <th>Número</th>
-                    <th>Fator</th>
-                    <th>Temas</th>
                     {% if user.is_authenticated %}
-                    <th>Opções</th>
+                    <th>Ativa</th>
                     {% endif %}
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,29 +33,30 @@
                     <tr>
                         <td>{{ acao.descricao }}</td>
                         <td>{{ acao.motivo }}</td>
-                        <td>{{ acao.valor }}</td>
-                        <td>{{ acao.data_inicio }}</td>
-                        <td>{{ acao.data_fim }}</td>
-                        <td>{{ acao.local }}</td>
-                        <td>{{ acao.get_tipo_display }}</td>
-                        <td>{{ acao.responsavel }}</td>
                         <td>{{ acao.numero }}</td>
-                        <td>{{ acao.fator }}</td>
-                        <td>
-                            {% for tema in acao.temas.all %}
-                                {{ tema }};
-                            {% endfor %}
                         </td>
                         {% if user.is_authenticated %}
-                        <td>
-                            <a href="{% url 'pdic:edit-acao' acao.id %}" class="btn btn-primary option-btn">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </a>
-                            <a href="{% url 'pdic:delete-acao' acao.id %}" class="btn btn-danger option-btn">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </td>
+                            <td>
+                                {% if acao.ativa %}
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                {% else %}
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                {% endif %}
+                            </td>
                         {% endif %}
+                        <td>
+                            <a href="{% url 'pdic:detail-acao' acao.id %}" class="btn btn-default option-btn">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'pdic:edit-acao' acao.id %}" class="btn btn-primary option-btn">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                                <a href="{% url 'pdic:delete-acao' acao.id %}" class="btn btn-danger option-btn">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

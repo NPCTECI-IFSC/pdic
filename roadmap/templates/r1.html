@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <h1 id="chart-label">Rota com suas respectivas tendências setoriais e conhecimentos chave</h1>
+    <select id="rota" class="form-control">
+        <option>Selecione uma rota</option>
+        {% for rota in rotas %}
+            <option value="{{ rota.id }}">{{ rota.nome }}</option>
+        {% endfor %}
+    </select>
+    <br/>
+    <button class="btn btn-default search" type="button">Buscar</button>
+    <div id="chart"></div>
+    <script type="text/javascript" src="{% static 'js/google-charts.min.js' %}"></script>
+    <script>
+        google.charts.load("current",{packages:["wordtree"],language:"pt-BR"});
+        $('.search').click(function(){
+            if ($('#rota').val() != "0"){
+                var dados = [['id', 'childLabel', 'parent', 'size', {role: 'style'}]];
+                $.ajax({
+                    method: "GET",
+                    url: "{% url 'relatorio1-list' %}?id=" + $('#rota').val(),
+                    success: function(data){
+                        var count = 0;
+                        var rota = data[0];
+                        dados.push([count++, rota.nome, -1, 1, "black"]);
+                        rota.tendencias.forEach(function(tendencia){
+                            tendencia.id = count++;
+                            dados.push([tendencia.id, tendencia.descricao, 0, 1, "black"]);
+                            tendencia.conhecimentos.forEach(function(conhecimento){
+                                dados.push([count++, conhecimento.descricao, tendencia.id, 1, "black"]);
+                            });
+                        });
+                    }
+                }).then(function(){
+                    google.charts.setOnLoadCallback(drawSimpleNodeChart);
+                    function drawSimpleNodeChart() {
+                        var nodeListData = new google.visualization.arrayToDataTable(dados);
+                        var options = {
+                            colors: ['black', 'black', 'black'],
+                            wordtree: {
+                                fontSize: '10px',
+                                format: 'explicit',
+                                type: 'suffix'
+                            }
+                        };
+                        var wordtree = new google.visualization.WordTree(document.getElementById('chart'));
+                        wordtree.draw(nodeListData, options);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

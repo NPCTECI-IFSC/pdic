@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="col-md-7">
+        <h1>Detalhes de ação</h1>
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>{{ acao }}</b></div>
+            <div class="panel-body">
+                <p>Descrição: {{ acao.descricao }}</p>
+                <p>Período: {{ acao.data_inicio }} à {{ acao.data_fim }}</p>
+                <p>Motivo: {{ acao.motivo }}</p>
+                <p>Valor: R$ {{ acao.valor|floatformat:2 }}</p>
+                <p>Local: {{ acao.local }}</p>
+                <p>Tipo: {{ acao.get_tipo_display }}</p>
+                <p>Número: {{ acao.numero }}</p>
+                <p>Fator: {{ acao.fator }}</p>
+                <p>Responsável: {{ acao.responsavel }}</p>
+                Temas:
+                <ul>
+                    {% for tema in acao.temas.all %}
+                        <li>{{ tema.descricao }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

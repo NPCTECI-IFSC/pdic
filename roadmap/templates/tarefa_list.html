@@ -20,45 +20,42 @@
             <thead>
                 <tr>
                     <th>Status</th>
-                    <th>Data de início</th>
-                    <th>Data final</th>
                     <th>Porcentagem</th>
                     <th>Descrição</th>
-                    <th>Ação</th>
-                    <th>Responsável</th>
                     {% if user.is_authenticated %}
-                    <th>Ativa</th>
-                    <th>Opções</th>
+                        <th>Ativa</th>
                     {% endif %}
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
                 {% for tarefa in tarefas %}
                     <tr>
                         <td>{{ tarefa.get_status_display }}</td>
-                        <td>{{ tarefa.data_inicio }}</td>
-                        <td>{{ tarefa.data_fim }}</td>
                         <td>{{ tarefa.porcentagem }}%</td>
                         <td>{{ tarefa.descricao }}</td>
-                        <td>{{ tarefa.acao }}</td>
-                        <td>{{ tarefa.responsavel.nome }}</td>
                         {% if user.is_authenticated %}
+                            <td>
+                                {% if tarefa.ativa %}
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                {% else %}
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                {% endif %}
+                            </td>
+                        {% endif %}
                         <td>
-                            {% if tarefa.ativa %}
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                            {% else %}
-                                <i class="fa fa-times" aria-hidden="true"></i>
+                            <a href="{% url 'pdic:detail-tarefa' tarefa.id %}" class="btn btn-default option-btn">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'pdic:edit-tarefa' tarefa.id %}" class="btn btn-primary option-btn">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                                <a href="{% url 'pdic:delete-tarefa' tarefa.id %}" class="btn btn-danger option-btn btn-delete">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
                             {% endif %}
                         </td>
-                        <td>
-                            <a href="{% url 'pdic:edit-tarefa' tarefa.id %}" class="btn btn-primary option-btn">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </a>
-                            <a href="{% url 'pdic:delete-tarefa' tarefa.id %}" class="btn btn-danger option-btn btn-delete">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>

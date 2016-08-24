@@ -7,6 +7,7 @@ from roadmap.views import *
 
 urlpatterns = [
     url(r'^tarefas/$', TarefaList.as_view(), name='list-tarefas'),
+    url(r'^tarefas/detail/(?P<pk>[0-9]+)/$', TarefaDetail.as_view(), name='detail-tarefa'),
     url(r'^tarefas/new/$', login_required(TarefaCreate.as_view()), name='create-tarefa'),
     url(
         r'^tarefas/edit/(?P<pk>[0-9]+)/$',
@@ -83,6 +84,7 @@ urlpatterns = [
         name='delete-tema'
     ),
     url(r'^acoes/$', AcaoList.as_view(), name='list-acoes'),
+    url(r'^acoes/detail/(?P<pk>[0-9]+)/$', AcaoDetail.as_view(), name='detail-acao'),
     url(r'^acoes/new/$', login_required(AcaoCreate.as_view()), name='create-acao'),
     url(
         r'^acoes/edit/(?P<pk>[0-9]+)/$',
@@ -122,6 +124,7 @@ urlpatterns = [
         login_required(ConhecimentoDelete.as_view()),
         name='delete-conhecimento'
     ),
+    url(r'^relatorio/rotas/$', Relatorio1.as_view(), name='r1'),
     url(r'^relatorio/acoes/$', Relatorio3.as_view(), name='r3'),
     url(r'^relatorio/tarefas/(?P<pk>[0-9]+)/$', Relatorio4.as_view(), name='r4')
 ]

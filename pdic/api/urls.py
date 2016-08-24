@@ -6,7 +6,8 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'usuarios', UsuarioViewSet)
-router.register(r'rotas', RotaViewSet)
+router.register(r'rotas', RotaViewSet, 'rotas')
+router.register(r'relatorio1', Relatorio1ViewSet, 'relatorio1')
 router.register(r'visoes', VisaoViewSet)
 router.register(r'fatores', FatorViewSet)
 router.register(r'acoes', AcaoViewSet)

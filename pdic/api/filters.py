@@ -39,3 +39,12 @@ class TendenciaFilter(django_filters.FilterSet):
         fields = {
             'rota': ['exact']
         }
+
+
+class RotaFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = Rota
+        fields = {
+            'id': ['exact']
+        }

@@ -63,3 +63,10 @@ class TendenciaViewSet(ModelViewSet):
 class ConhecimentoViewSet(ModelViewSet):
     queryset = Conhecimento.objects.filter(ativa=True)
     serializer_class = ConhecimentoSerializer
+
+
+class Relatorio1ViewSet(ModelViewSet):
+    queryset = Rota.objects.filter(ativa=True)
+    serializer_class = Relatorio1Serializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = RotaFilter

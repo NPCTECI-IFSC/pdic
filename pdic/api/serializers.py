@@ -121,3 +121,29 @@ class ConhecimentoSerializer(serializers.ModelSerializer):
             'tendencia',
             'ativa'
         )
+
+
+# PARTE ESPECÍFICA PARA RELATÓRIOS
+class Relatorio1ConhecimentoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Conhecimento
+        fields = ('id', 'descricao', 'ativa')
+
+
+class Relatorio1TendenciaSerializer(serializers.ModelSerializer):
+
+    conhecimentos = Relatorio1ConhecimentoSerializer(many=True)
+
+    class Meta:
+        model = Tendencia
+        fields = ('id', 'descricao', 'ativa', 'conhecimentos')
+
+
+class Relatorio1Serializer(serializers.ModelSerializer):
+
+    tendencias = Relatorio1TendenciaSerializer(many=True)
+
+    class Meta:
+        model = Rota
+        fields = ('id', 'nome', 'ativa', 'tendencias')
