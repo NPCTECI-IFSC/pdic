@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="tagcloud"></div>
+    <script>
+        var tags = [];
+        var insertTag = function(obj, list) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].text === obj.descricao) {
+                    list[i].weight++;
+                    return;
+                }
+            }
+            list.push({text: obj.descricao, weight: 1});
+        }
+        $.ajax({
+            method: "GET",
+            url: "{% url 'relatorio2-list' %}",
+            success: function(data){
+                data.forEach(function(tendencia){
+                    tendencia.conhecimentos.forEach(function(conhecimento){
+                        insertTag(conhecimento, tags);
+                    });
+                });
+            }
+        }).then(function(){
+            if(tags.length){
+                $('#tagcloud').jQCloud(tags, {
+                    width: 500,
+                    height: 350
+                });
+            } else {
+                $('#tagcloud').html('Não há tendências setoriais cadastradas.');
+            }
+        });
+    </script>
+{% endblock %}

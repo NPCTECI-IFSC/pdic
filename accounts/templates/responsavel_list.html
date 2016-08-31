@@ -2,12 +2,12 @@
 {% block content %}
     <h1>Lista de responsáveis</h1>
     {% if user.is_authenticated %}
-    <a href="{% url 'pdic:create-responsavel' %}" class="btn btn-default btn-create">
+    <a href="{% url 'accounts:create-responsavel' %}" class="btn btn-default btn-create">
         <i class="fa fa-plus" aria-hidden="true"></i>
         Adicionar
     </a>
     {% endif %}
-    <form class="navbar-form" role="search" method="GET" action="{% url 'pdic:list-responsaveis' %}">
+    <form class="navbar-form" role="search" method="GET" action="{% url 'accounts:list-responsaveis' %}">
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Pesquisar" name="q">
             <div class="input-group-btn">
@@ -39,10 +39,10 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{% url 'pdic:edit-responsavel' responsavel.id %}" class="btn btn-primary option-btn">
+                            <a href="{% url 'accounts:edit-responsavel' responsavel.id %}" class="btn btn-primary option-btn">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </a>
-                            <a href="{% url 'pdic:delete-responsavel' responsavel.id %}" class="btn btn-danger option-btn">
+                            <a href="{% url 'accounts:delete-responsavel' responsavel.id %}" class="btn btn-danger option-btn">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </td>
@@ -58,7 +58,7 @@
         <div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
-                    <a href="{% url 'pdic:list-responsaveis' %}?page={{ page_obj.previous_page_number }}">
+                    <a href="{% url 'accounts:list-responsaveis' %}?page={{ page_obj.previous_page_number }}">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </a>
                 {% endif %}
@@ -66,7 +66,7 @@
                     {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
                 </span>
                 {% if page_obj.has_next %}
-                    <a href="{% url 'pdic:list-responsaveis' %}?page={{ page_obj.next_page_number }}">
+                    <a href="{% url 'accounts:list-responsaveis' %}?page={{ page_obj.next_page_number }}">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 {% endif %}

@@ -1,6 +1,7 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
+from accounts.models import *
 from django import forms
 from django.contrib.auth import authenticate
 from util.forms import fix_fields
@@ -22,3 +23,14 @@ class LoginForm(forms.Form):
         if (username and password) and not user:
             raise forms.ValidationError(u'Login ou senha inválidos')
         return self.cleaned_data
+
+
+class ResponsavelForm(forms.ModelForm):
+
+    class Meta:
+        model = Responsavel
+        fields = ('nome', 'ativa')
+
+    def __init__(self, *args, **kwargs):
+        super(ResponsavelForm, self).__init__(*args, **kwargs)
+        fix_fields(self.fields)

@@ -69,7 +69,6 @@ class AcaoSerializer(serializers.ModelSerializer):
             'local',
             'ativa',
             'tipo',
-            'numero',
             'fator',
             'temas'
         )
@@ -147,3 +146,12 @@ class Relatorio1Serializer(serializers.ModelSerializer):
     class Meta:
         model = Rota
         fields = ('id', 'nome', 'ativa', 'tendencias')
+
+
+class Relatorio2Serializer(serializers.ModelSerializer):
+
+    conhecimentos = ConhecimentoSerializer(many=True)
+
+    class Meta:
+        model = Tendencia
+        fields = ('conhecimentos',)

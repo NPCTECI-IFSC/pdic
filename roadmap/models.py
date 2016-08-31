@@ -1,7 +1,7 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from accounts.models import Usuario
+from accounts.models import Usuario, Responsavel
 from django.db import models
 
 
@@ -102,28 +102,6 @@ class Fator(models.Model):
         return self.nome
 
 
-class Responsavel(models.Model):
-    id = models.AutoField(primary_key=True, db_column='id_resp')
-    nome = models.CharField(
-        verbose_name=u'Nome',
-        max_length=100,
-        db_column='nome_resp'
-    )
-    ativa = models.BooleanField(
-        verbose_name=u'Ativo',
-        default=True,
-        db_column='tb_responsavel'
-    )
-
-    class Meta:
-        db_table = 'tb_responsavel'
-        verbose_name = u'Responsável'
-        verbose_name_plural = u'Responsáveis'
-
-    def __unicode__(self):
-        return self.nome
-
-
 class Tema(models.Model):
     id = models.AutoField(primary_key=True, db_column='id_tema')
     descricao = models.TextField(
@@ -207,10 +185,6 @@ class Acao(models.Model):
         Responsavel,
         verbose_name=u'Responsável',
         db_column='tb_responsavel_id'
-    )
-    numero = models.IntegerField(
-        verbose_name=u'Número',
-        db_column='numero_acao'
     )
     fator = models.ForeignKey(
         Fator,

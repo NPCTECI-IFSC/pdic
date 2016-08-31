@@ -70,3 +70,8 @@ class Relatorio1ViewSet(ModelViewSet):
     serializer_class = Relatorio1Serializer
     filter_backends = (DjangoFilterBackend,)
     filter_class = RotaFilter
+
+
+class Relatorio2ViewSet(ModelViewSet):
+    queryset = Tendencia.objects.filter(ativa=True)
+    serializer_class = Relatorio2Serializer

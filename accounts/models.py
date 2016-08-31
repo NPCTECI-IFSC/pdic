@@ -5,6 +5,28 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
+class Responsavel(models.Model):
+    id = models.AutoField(primary_key=True, db_column='id_resp')
+    nome = models.CharField(
+        verbose_name=u'Nome',
+        max_length=100,
+        db_column='nome_resp'
+    )
+    ativa = models.BooleanField(
+        verbose_name=u'Ativo',
+        default=True,
+        db_column='tb_responsavel'
+    )
+
+    class Meta:
+        db_table = 'tb_responsavel'
+        verbose_name = u'Responsável'
+        verbose_name_plural = u'Responsáveis'
+
+    def __unicode__(self):
+        return self.nome
+
+
 class UsuarioManager(BaseUserManager):
 
     def create_user(self, email, nome, password=None):
@@ -45,6 +67,20 @@ class Usuario(AbstractBaseUser):
         blank=True,
         null=True,
         db_column='regiao_usuario'
+    )
+    telefone = models.CharField(
+        verbose_name=u'Telefone',
+        max_length=20,
+        blank=True,
+        null=True,
+        db_column='telefone_usuario'
+    )
+    organizacao = models.ForeignKey(
+        Responsavel,
+        verbose_name=u'Organização',
+        related_name='usuarios',
+        db_column='tb_responsavel_id',
+        null=True
     )
     ativa = models.BooleanField(
         verbose_name=u'Ativo',

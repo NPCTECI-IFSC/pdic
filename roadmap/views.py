@@ -1,10 +1,11 @@
 # encoding: utf-8
 from __future__ import unicode_literals
 
-from .forms import *
-from .models import *
+from roadmap.forms import *
+from roadmap.models import *
 from django.db.models import Sum, Count, ExpressionWrapper, FloatField
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.views import generic
 
 
@@ -81,6 +82,12 @@ class TarefaDelete(generic.edit.DeleteView):
     def get_success_url(self):
         return reverse(self.success_url)
 
+    def post(self, request, *args, **kwargs):
+        tarefa = Tarefa.objects.get(id=self.kwargs.get('pk'))
+        tarefa.ativa = False
+        tarefa.save()
+        return redirect(self.get_success_url())
+
 
 class RotaList(generic.ListView):
     template_name = 'rota_list.html'
@@ -139,6 +146,12 @@ class RotaDelete(generic.edit.DeleteView):
 
     def get_success_url(self):
         return reverse(self.success_url)
+
+    def post(self, request, *args, **kwargs):
+        rota = Rota.objects.get(id=self.kwargs.get('pk'))
+        rota.ativa = False
+        rota.save()
+        return redirect(self.get_success_url())
 
 
 class VisaoList(generic.ListView):
@@ -199,6 +212,12 @@ class VisaoDelete(generic.edit.DeleteView):
     def get_success_url(self):
         return reverse(self.success_url)
 
+    def post(self, request, *args, **kwargs):
+        visao = Visao.objects.get(id=self.kwargs.get('pk'))
+        visao.ativa = False
+        visao.save()
+        return redirect(self.get_success_url())
+
 
 class FatorList(generic.ListView):
     template_name = 'fator_list.html'
@@ -258,68 +277,11 @@ class FatorDelete(generic.edit.DeleteView):
     def get_success_url(self):
         return reverse(self.success_url)
 
-
-class ResponsavelList(generic.ListView):
-    template_name = 'responsavel_list.html'
-    context_object_name = 'responsaveis'
-    model = Responsavel
-    paginate_by = 15
-
-    def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Responsavel.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(nome__icontains=q)
-        return query
-
-
-class ResponsavelCreate(generic.FormView):
-    template_name = 'generic_form.html'
-    form_class = ResponsavelForm
-    success_url = 'pdic:list-responsaveis'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(ResponsavelCreate, self).form_valid(form)
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(
-            ResponsavelCreate, self
-        ).get_context_data(*args, **kwargs)
-        context['nome_form'] = u'Cadastro de responsável'
-        return context
-
-
-class ResponsavelEdit(generic.UpdateView):
-    template_name = 'generic_form.html'
-    form_class = ResponsavelForm
-    model = Responsavel
-    success_url = 'pdic:list-responsaveis'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(
-            ResponsavelEdit, self
-        ).get_context_data(*args, **kwargs)
-        context['nome_form'] = u'Edição de responsável'
-        return context
-
-
-class ResponsavelDelete(generic.edit.DeleteView):
-    template_name = 'generic_delete.html'
-    model = Responsavel
-    success_url = 'pdic:list-responsaveis'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
+    def post(self, request, *args, **kwargs):
+        fator = Fator.objects.get(id=self.kwargs.get('pk'))
+        fator.ativa = False
+        fator.save()
+        return redirect(self.get_success_url())
 
 
 class TemaList(generic.ListView):
@@ -379,6 +341,12 @@ class TemaDelete(generic.edit.DeleteView):
 
     def get_success_url(self):
         return reverse(self.success_url)
+
+    def post(self, request, *args, **kwargs):
+        tema = Tema.objects.get(id=self.kwargs.get('pk'))
+        tema.ativa = False
+        tema.save()
+        return redirect(self.get_success_url())
 
 
 class AcaoList(generic.ListView):
@@ -445,6 +413,12 @@ class AcaoDelete(generic.edit.DeleteView):
     def get_success_url(self):
         return reverse(self.success_url)
 
+    def post(self, request, *args, **kwargs):
+        acao = Acao.objects.get(id=self.kwargs.get('pk'))
+        acao.ativa = False
+        acao.save()
+        return redirect(self.get_success_url())
+
 
 class TendenciaList(generic.ListView):
     template_name = 'tendencia_list.html'
@@ -503,6 +477,12 @@ class TendenciaDelete(generic.edit.DeleteView):
 
     def get_success_url(self):
         return reverse(self.success_url)
+
+    def post(self, request, *args, **kwargs):
+        tendencia = Tendencia.objects.get(id=self.kwargs.get('pk'))
+        tendencia.ativa = False
+        tendencia.save()
+        return redirect(self.get_success_url())
 
 
 class ConhecimentoList(generic.ListView):
@@ -563,6 +543,12 @@ class ConhecimentoDelete(generic.edit.DeleteView):
     def get_success_url(self):
         return reverse(self.success_url)
 
+    def post(self, request, *args, **kwargs):
+        conhecimento = Conhecimento.objects.get(id=self.kwargs.get('pk'))
+        conhecimento.ativa = False
+        conhecimento.save()
+        return redirect(self.get_success_url())
+
 
 class Relatorio1(generic.ListView):
     template_name = 'r1.html'
@@ -571,7 +557,7 @@ class Relatorio1(generic.ListView):
 
 
 class Relatorio2(generic.TemplateView):
-    pass
+    template_name = 'r2.html'
 
 
 class Relatorio3(generic.ListView):

@@ -81,17 +81,6 @@ class FatorForm(forms.ModelForm):
         fix_fields(self.fields)
 
 
-class ResponsavelForm(forms.ModelForm):
-
-    class Meta:
-        model = Responsavel
-        fields = ('nome', 'ativa')
-
-    def __init__(self, *args, **kwargs):
-        super(ResponsavelForm, self).__init__(*args, **kwargs)
-        fix_fields(self.fields)
-
-
 class TemaForm(forms.ModelForm):
 
     class Meta:
@@ -117,7 +106,6 @@ class AcaoForm(forms.ModelForm):
             'ativa',
             'tipo',
             'responsavel',
-            'numero',
             'fator',
             'temas'
         )
