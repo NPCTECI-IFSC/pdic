@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block content %}
+    <div id="chart"></div>
+    <script type="text/javascript" src="{% static 'js/google-charts.min.js' %}"></script>
+    <script>
+        var prazos = {
+            "CP": "Curto Prazo",
+            "MP": "Médio Prazo",
+            "LP": "Longo Prazo"
+        }
+        var contains = function(arr, elem){
+            for(var i = 0; i < arr.length; i++){
+                if(dados[i][0] == elem){
+                    return i;
+                }
+            }
+            return false;
+        }
+        var dados = [['Prazo', 'Quantidade']]
+        $.ajax({
+            method: "GET",
+            url: "{% url 'visao-list' %}",
+            success: function(data){
+                data.forEach(function(item){
+                    var index = contains(dados, prazos[item.tipo]);
+                    if(index){
+                        dados[index][1]++;
+                    } else {
+                        dados.push([prazos[item.tipo], 1]);
+                    }
+                });
+            }
+        }).then(function(){
+            google.charts.load("current", {packages:['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable(dados);
+
+                var options = {
+                    title: "Quantidade de visões por prazo",
+                    width: 800,
+                };
+                {% if type == '1' %}
+                    var chart = new google.visualization.PieChart(document.getElementById("chart"));
+                {% else %}
+                    var chart = new google.visualization.ColumnChart(document.getElementById("chart"));
+                {% endif %}
+                chart.draw(data, options);
+            }
+        });
+        </script>
+{% endblock %}

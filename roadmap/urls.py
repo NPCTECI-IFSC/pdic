@@ -163,5 +163,10 @@ urlpatterns = [
         r'^relatorio/tarefas/(?P<pk>[0-9]+)/$',
         Relatorio4.as_view(),
         name='r4'
+    ),
+    url(
+        r'^relatorio/custom/$',
+        CustomGraph.as_view(),
+        name='custom-graph'
     )
 ]

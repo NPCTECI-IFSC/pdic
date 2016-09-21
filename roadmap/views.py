@@ -579,3 +579,12 @@ class Relatorio4(generic.DetailView):
     template_name = 'r4.html'
     model = Acao
     context_object_name = 'acao'
+
+
+class CustomGraph(generic.TemplateView):
+    template_name = 'custom_graph.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CustomGraph, self).get_context_data(*args, **kwargs)
+        context['type'] = self.request.GET.get('type')
+        return context
