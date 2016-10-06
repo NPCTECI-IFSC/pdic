@@ -9,24 +9,54 @@ from django.shortcuts import redirect
 from django.views import generic
 
 
+class CustomListView(generic.ListView):
+
+    def get_queryset(self, model, filter):
+        q = self.request.GET.get('q', None)
+        query = model.objects.all()
+        if not self.request.user.is_authenticated():
+            query = query.filter(ativa=True)
+        if q:
+            query = query.filter(**{filter: q})
+        return query
+
+
+class CustomFormView(generic.FormView):
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+        return super(CustomFormView, self).form_valid(form)
+
+
+class CustomDeleteView(generic.edit.DeleteView):
+
+    def get_success_url(self):
+        return reverse(self.success_url)
+
+    def post(self, request, *args, **kwargs):
+        obj = self.model.objects.get(id=self.kwargs.get('pk'))
+        obj.ativa = False
+        obj.save()
+        return redirect(self.get_success_url())
+
+
 class Index(generic.TemplateView):
     template_name = 'index.html'
 
 
-class TarefaList(generic.ListView):
+class TarefaList(CustomListView):
     template_name = 'tarefa_list.html'
     context_object_name = 'tarefas'
     model = Tarefa
     paginate_by = 15
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Tarefa.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(descricao__icontains=q)
-        return query
+        filter = 'descricao__icontains'
+        return super(TarefaList, self).get_queryset(Tarefa, filter)
 
 
 class TarefaDetail(generic.DetailView):
@@ -35,23 +65,15 @@ class TarefaDetail(generic.DetailView):
     model = Tarefa
 
 
-class TarefaCreate(generic.FormView):
+class TarefaCreate(CustomFormView):
     template_name = 'tarefa_form.html'
     form_class = TarefaForm
     success_url = 'pdic:list-tarefas'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
 
     def get_initial(self):
         initial = super(TarefaCreate, self).get_initial()
         initial['responsavel'] = self.request.user
         return initial
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(TarefaCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(TarefaCreate, self).get_context_data(*args, **kwargs)
@@ -74,49 +96,27 @@ class TarefaEdit(generic.edit.UpdateView):
         return context
 
 
-class TarefaDelete(generic.edit.DeleteView):
+class TarefaDelete(CustomDeleteView):
     template_name = 'generic_delete.html'
     model = Tarefa
     success_url = 'pdic:list-tarefas'
 
-    def get_success_url(self):
-        return reverse(self.success_url)
 
-    def post(self, request, *args, **kwargs):
-        tarefa = Tarefa.objects.get(id=self.kwargs.get('pk'))
-        tarefa.ativa = False
-        tarefa.save()
-        return redirect(self.get_success_url())
-
-
-class RotaList(generic.ListView):
+class RotaList(CustomListView):
     template_name = 'rota_list.html'
     context_object_name = 'rotas'
     model = Rota
     paginate_by = 15
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Rota.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(nome__icontains=q)
-        return query
+        filter = 'nome__icontains'
+        return super(RotaList, self).get_queryset(Rota, filter)
 
 
-class RotaCreate(generic.FormView):
+class RotaCreate(CustomFormView):
     template_name = 'generic_form.html'
     form_class = RotaForm
     success_url = 'pdic:list-rotas'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(RotaCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(RotaCreate, self).get_context_data(*args, **kwargs)
@@ -139,49 +139,27 @@ class RotaEdit(generic.edit.UpdateView):
         return context
 
 
-class RotaDelete(generic.edit.DeleteView):
+class RotaDelete(CustomDeleteView):
     template_name = 'generic_delete.html'
     model = Rota
     success_url = 'pdic:list-rotas'
 
-    def get_success_url(self):
-        return reverse(self.success_url)
 
-    def post(self, request, *args, **kwargs):
-        rota = Rota.objects.get(id=self.kwargs.get('pk'))
-        rota.ativa = False
-        rota.save()
-        return redirect(self.get_success_url())
-
-
-class VisaoList(generic.ListView):
+class VisaoList(CustomListView):
     template_name = 'visao_list.html'
     context_object_name = 'visoes'
     model = Visao
     paginate_by = 15
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Visao.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(descricao__icontains=q)
-        return query
+        filter = 'descricao__icontains'
+        return super(VisaoList, self).get_queryset(Visao, filter)
 
 
-class VisaoCreate(generic.FormView):
+class VisaoCreate(CustomFormView):
     template_name = 'generic_form.html'
     form_class = VisaoForm
     success_url = 'pdic:list-visoes'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(VisaoCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(VisaoCreate, self).get_context_data(*args, **kwargs)
@@ -204,49 +182,27 @@ class VisaoEdit(generic.edit.UpdateView):
         return context
 
 
-class VisaoDelete(generic.edit.DeleteView):
+class VisaoDelete(CustomDeleteView):
     template_name = 'generic_delete.html'
     model = Visao
     success_url = 'pdic:list-visoes'
 
-    def get_success_url(self):
-        return reverse(self.success_url)
 
-    def post(self, request, *args, **kwargs):
-        visao = Visao.objects.get(id=self.kwargs.get('pk'))
-        visao.ativa = False
-        visao.save()
-        return redirect(self.get_success_url())
-
-
-class FatorList(generic.ListView):
+class FatorList(CustomListView):
     template_name = 'fator_list.html'
     context_object_name = 'fatores'
     model = Fator
     paginate_by = 15
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Fator.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(nome__icontains=q)
-        return query
+        filter = 'nome__icontains'
+        return super(FatorList, self).get_queryset(Fator, filter)
 
 
-class FatorCreate(generic.FormView):
+class FatorCreate(CustomFormView):
     template_name = 'generic_form.html'
     form_class = FatorForm
     success_url = 'pdic:list-fatores'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(FatorCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(FatorCreate, self).get_context_data(*args, **kwargs)
@@ -269,49 +225,27 @@ class FatorEdit(generic.edit.UpdateView):
         return context
 
 
-class FatorDelete(generic.edit.DeleteView):
+class FatorDelete(CustomDeleteView):
     template_name = 'generic_delete.html'
     model = Fator
     success_url = 'pdic:list-fatores'
 
-    def get_success_url(self):
-        return reverse(self.success_url)
 
-    def post(self, request, *args, **kwargs):
-        fator = Fator.objects.get(id=self.kwargs.get('pk'))
-        fator.ativa = False
-        fator.save()
-        return redirect(self.get_success_url())
-
-
-class TemaList(generic.ListView):
+class TemaList(CustomListView):
     template_name = 'tema_list.html'
     context_object_name = 'temas'
     model = Tema
     paginate_by = 15
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Tema.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(descricao__icontains=q)
-        return query
+        filter = 'descricao__icontains'
+        return super(TemaList, self).get_queryset(Tema, filter)
 
 
-class TemaCreate(generic.FormView):
+class TemaCreate(CustomFormView):
     template_name = 'generic_form.html'
     form_class = TemaForm
     success_url = 'pdic:list-temas'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(TemaCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(TemaCreate, self).get_context_data(*args, **kwargs)
@@ -334,35 +268,21 @@ class TemaEdit(generic.edit.UpdateView):
         return context
 
 
-class TemaDelete(generic.edit.DeleteView):
+class TemaDelete(CustomDeleteView):
     template_name = 'generic_delete.html'
     model = Tema
     success_url = 'pdic:list-temas'
 
-    def get_success_url(self):
-        return reverse(self.success_url)
 
-    def post(self, request, *args, **kwargs):
-        tema = Tema.objects.get(id=self.kwargs.get('pk'))
-        tema.ativa = False
-        tema.save()
-        return redirect(self.get_success_url())
-
-
-class AcaoList(generic.ListView):
+class AcaoList(CustomListView):
     template_name = 'acao_list.html'
     context_object_name = 'acoes'
     model = Acao
     paginate_by = 10
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Acao.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(descricao__icontains=q)
-        return query
+        filter = 'descricao__icontains'
+        return super(AcaoList, self).get_queryset(Acao, filter)
 
 
 class AcaoDetail(generic.DetailView):
@@ -371,18 +291,10 @@ class AcaoDetail(generic.DetailView):
     model = Acao
 
 
-class AcaoCreate(generic.FormView):
+class AcaoCreate(CustomFormView):
     template_name = 'generic_form.html'
     form_class = AcaoForm
     success_url = 'pdic:list-acoes'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(AcaoCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(AcaoCreate, self).get_context_data(*args, **kwargs)
@@ -410,44 +322,22 @@ class AcaoDelete(generic.edit.DeleteView):
     model = Acao
     success_url = 'pdic:list-acoes'
 
-    def get_success_url(self):
-        return reverse(self.success_url)
 
-    def post(self, request, *args, **kwargs):
-        acao = Acao.objects.get(id=self.kwargs.get('pk'))
-        acao.ativa = False
-        acao.save()
-        return redirect(self.get_success_url())
-
-
-class TendenciaList(generic.ListView):
+class TendenciaList(CustomListView):
     template_name = 'tendencia_list.html'
     context_object_name = 'tendencias'
     model = Tendencia
     paginate_by = 10
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Tendencia.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(descricao__icontains=q)
-        return query
+        filter = 'descricao__icontains'
+        return super(TendenciaList, self).get_queryset(Tendencia, filter)
 
 
-class TendenciaCreate(generic.FormView):
+class TendenciaCreate(CustomFormView):
     template_name = 'generic_form.html'
     form_class = TendenciaForm
     success_url = 'pdic:list-tendencias'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(TendenciaCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(TendenciaCreate, self).get_context_data(*args, **kwargs)
@@ -475,44 +365,22 @@ class TendenciaDelete(generic.edit.DeleteView):
     model = Tendencia
     success_url = 'pdic:list-tendencias'
 
-    def get_success_url(self):
-        return reverse(self.success_url)
 
-    def post(self, request, *args, **kwargs):
-        tendencia = Tendencia.objects.get(id=self.kwargs.get('pk'))
-        tendencia.ativa = False
-        tendencia.save()
-        return redirect(self.get_success_url())
-
-
-class ConhecimentoList(generic.ListView):
+class ConhecimentoList(CustomListView):
     template_name = 'conhecimento_list.html'
     context_object_name = 'conhecimentos'
     model = Conhecimento
     paginate_by = 10
 
     def get_queryset(self):
-        q = self.request.GET.get('q', None)
-        query = Conhecimento.objects.all()
-        if not self.request.user.is_authenticated():
-            query = query.filter(ativa=True)
-        if q:
-            query = query.filter(descricao__icontains=q)
-        return query
+        filter = 'descricao__icontains'
+        return super(ConhecimentoList, self).get_queryset(Conhecimento, filter)
 
 
-class ConhecimentoCreate(generic.FormView):
+class ConhecimentoCreate(CustomFormView):
     template_name = 'conhecimento_form.html'
     form_class = ConhecimentoForm
     success_url = 'pdic:list-conhecimentos'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
-        return super(ConhecimentoCreate, self).form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super(ConhecimentoCreate, self).get_context_data(*args, **kwargs)
@@ -539,15 +407,6 @@ class ConhecimentoDelete(generic.edit.DeleteView):
     template_name = 'generic_delete.html'
     model = Conhecimento
     success_url = 'pdic:list-conhecimentos'
-
-    def get_success_url(self):
-        return reverse(self.success_url)
-
-    def post(self, request, *args, **kwargs):
-        conhecimento = Conhecimento.objects.get(id=self.kwargs.get('pk'))
-        conhecimento.ativa = False
-        conhecimento.save()
-        return redirect(self.get_success_url())
 
 
 class Relatorio1(generic.ListView):
