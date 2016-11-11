@@ -1,0 +1,57 @@
+.fa-check {
+    color: green;
+}
+
+.fa-times {
+    color:red;
+}
+
+.option-btn {
+    padding: 4px 8px;
+}
+
+.pagination {
+    display: block;
+    text-align: center;
+}
+
+.btn-create {
+    margin-bottom: 20px;
+}
+
+.table th, td {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+#delete-form {
+    color: red;
+    margin-top: 20px;
+}
+
+.navbar-form {
+    padding: 0px;
+}
+
+#page-wrapper {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.errorlist {
+    color: red;
+    list-style: none;
+    padding: 0px;
+}
+
+#menu-username {
+    text-transform: capitalize;
+}
+
+input[type=checkbox] {
+    width: auto;
+    height: auto;
+    display: inline;
+    position: relative;
+    top: 3px;
+    margin-left: 5px;
+}
